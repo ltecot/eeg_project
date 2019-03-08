@@ -3,5 +3,5 @@ Project for UCLA ECE 239AS
 
 ### Setup:
 * create virtualenv
-* install requirements from requirement.txt
+* install requirements from requirements.txt
 * run jupyter notebook
