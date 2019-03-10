@@ -1,22 +1,18 @@
-# This model is copied and modified from the Keras VAE example. See link below.
+# This model is a modified version of the Keras VAE example. See link below.
 # https://github.com/keras-team/keras/blob/master/examples/variational_autoencoder.py
 
-'''Example of VAE on MNIST dataset using MLP
-The VAE has a modular design. The encoder, decoder and VAE
-are 3 models that share weights. After training the VAE model,
-the encoder can be used to generate latent vectors.
-The decoder can be used to generate MNIST digits by sampling the
-latent vector from a Gaussian distribution with mean = 0 and std = 1.
 # Reference
-[1] Kingma, Diederik P., and Max Welling.
-"Auto-Encoding Variational Bayes."
-https://arxiv.org/abs/1312.6114
-'''
+# [1] Kingma, Diederik P., and Max Welling.
+# "Auto-Encoding Variational Bayes."
+# https://arxiv.org/abs/1312.6114
+
+# Dev note: Tried a variety of layer sizes and depths but always seemed to get ~2400 train and valid.
 
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+# Because OSX complains about matplotlib
 from sys import platform as sys_pf
 if sys_pf == 'darwin':
     import matplotlib
@@ -34,85 +30,7 @@ import matplotlib.pyplot as plt
 import argparse
 import os
 
-from scipy import integrate
-
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.colors import cnames
-from matplotlib import animation
-
-# Based off code from following link
-# https://jakevdp.github.io/blog/2013/02/16/animating-the-lorentz-system-in-3d/
-def plot_3D(model, x_t, y_t, num_show=10, plot=False):
-
-    t = np.arange(0, 1000)
-    rand_indexes = np.random.choice(x_t.shape[0], num_show, replace=False)
-    # print(rand_indexes)
-    x_t = x_t[rand_indexes, :, :]
-    y_t = y_t[rand_indexes]
-
-    # print(x_t.shape)
-
-    # Set up figure & 3D axis for animation
-    fig = plt.figure()
-    ax = fig.add_axes([0, 0, 1, 1], projection='3d')
-    ax.axis('on')
-
-    # choose a different color for each trajectory
-    # colors = plt.cm.jet(np.linspace(0, 1, x_t.shape[0]))
-    # Different color for each action class.
-    colors = plt.cm.jet(y_t / float(np.amax(y_t)))
-    # print(colors)
-
-    # set up lines and points
-    lines = sum([ax.plot([], [], [], '-', c=c)
-                 for c in colors], [])
-    pts = sum([ax.plot([], [], [], 'o', c=c)
-               for c in colors], [])
-
-    # prepare the axes limits
-    ax.set_xlim((-2, 2))
-    ax.set_ylim((-2, 2))
-    ax.set_zlim((-2, 2))
-
-    # set point-of-view: specified by (altitude degrees, azimuth degrees)
-    ax.view_init(30, 0)
-
-    # initialization function: plot the background of each frame
-    def init():
-        for line, pt in zip(lines, pts):
-            line.set_data([], [])
-            line.set_3d_properties([])
-
-            pt.set_data([], [])
-            pt.set_3d_properties([])
-        return lines + pts
-
-    # animation function.  This will be called sequentially with the frame number
-    def animate(i):
-        # we'll step two time-steps per frame.  This leads to nice results.
-        i = (i) % x_t.shape[1]
-
-        for line, pt, xi in zip(lines, pts, x_t):
-            x, y, z = xi[:i].T
-            line.set_data(x, y)
-            line.set_3d_properties(z)
-
-            pt.set_data(x[-1:], y[-1:])
-            pt.set_3d_properties(z[-1:])
-
-        ax.view_init(30, 0.3 * i)
-        fig.canvas.draw()
-        return lines + pts
-
-    # instantiate the animator.
-    anim = animation.FuncAnimation(fig, animate, init_func=init,
-                                   frames=500, interval=30, blit=True)
-
-    # Save as mp4. This requires mplayer or ffmpeg to be installed
-    anim.save('vae_viz.mp4', fps=15, extra_args=['-vcodec', 'libx264'])
-
-    if plot:
-        plt.show()
+from plotting_utils import plot_3D
 
 # reparameterization trick
 # instead of sampling from Q(z|X), sample epsilon = N(0,I)
@@ -134,15 +52,23 @@ def sampling(args):
 
 
 class VAE(object):
-
+    """ Class to use and train a VAE
+    Args:
+        original_dim: Last dimension of the input data. (22 for EEG)
+        intermediate_dim: Dimension for all hidden layers in encoder/decoder.
+        latent_dim: Dimension of latent state. (3 for 3D data)
+    """
     def __init__(self, original_dim, intermediate_dim, latent_dim):
+
         # network parameters
         input_shape = (original_dim, )
 
         # VAE model = encoder + decoder
         # build encoder model
         inputs = Input(shape=input_shape, name='encoder_input')
-        x = Dense(intermediate_dim, activation='relu')(inputs)
+        h1 = Dense(intermediate_dim, activation='relu')(inputs)
+        h2 = Dense(intermediate_dim, activation='relu')(h1)
+        x = Dense(intermediate_dim, activation='relu')(h2)
         z_mean = Dense(latent_dim, name='z_mean')(x)
         z_log_var = Dense(latent_dim, name='z_log_var')(x)
 
@@ -158,7 +84,9 @@ class VAE(object):
         # build decoder model
         latent_inputs = Input(shape=(latent_dim,), name='z_sampling')
         x = Dense(intermediate_dim, activation='relu')(latent_inputs)
-        outputs = Dense(original_dim, activation='sigmoid')(x)
+        h2 = Dense(intermediate_dim, activation='relu')(x)
+        h1 = Dense(intermediate_dim, activation='relu')(h2)
+        outputs = Dense(original_dim, activation='sigmoid')(h1)
 
         # instantiate decoder model
         decoder = Model(latent_inputs, outputs, name='decoder')
@@ -180,7 +108,17 @@ class VAE(object):
         self.intermediate_dim = intermediate_dim
         self.latent_dim = latent_dim
 
-    def train(self, x_train, x_test, batch_size=128, epochs=1, use_mse=True):
+    def train(self, x_train, x_valid, batch_size=128, epochs=1, use_mse=True):
+        """ Trains the VAE
+        Args:
+            x_train: Data to use for training. Must be 2D, and last dim must match original_dim.
+                     For EEG training, we flatten out the time steps of all the trails for this.
+            x_valid: Data for validation during training. Same dimension properties as x_train.
+            batch_size: Batch size
+            epochs: number of epochs to train
+            use_mse: Whether to use MSE or cross entropy in training. Generally should stay true.
+            latent_dim: Dimension of latent state. (3 for 3D data)
+        """
 
         x_train = np.random.permutation(x_train)
         inputs = self.inputs
@@ -213,20 +151,32 @@ class VAE(object):
         vae.fit(x_train,
                 epochs=epochs,
                 batch_size=batch_size,
-                validation_data=(x_test, None))
+                validation_data=(x_valid, None))
         vae.save_weights('vae_mlp_eeg.h5')
 
+    def load_weights(self, weights):
+        """ Load Weights. Intended to be used if you don't want to train again.
+        Args:
+            weights: Name of the weights file. Can be a relative or absolute file path.
+        """
+        self.vae.load_weights(weights)
+
     def forward(self, x, batch_size=128):
+        """ Encode the data into the latent state.
+        Args:
+            x_train: Data to encode. Must be 2D, and last dim must match original_dim.
+            batch_size: Batch size
+        Returns:
+            2D array of encodings. Will be same dimensionality as input, except the 
+            last dimension will be converted to the latent_dim size.
+        """
         z_mean, _, _ = self.encoder.predict(x, batch_size=batch_size)
         return z_mean
 
-    def load_weights(self, weights):
-        self.vae.load_weights(weights)
-
 if __name__ == '__main__':
 
-    # weights = None
-    weights = "vae_mlp_eeg.h5"
+    weights = None
+    # weights = "vae_mlp_eeg.h5"
 
     def format_data(x, y):
         x = np.swapaxes(x, 1, 2)
@@ -244,24 +194,25 @@ if __name__ == '__main__':
     y_train_valid = np.load("y_train_valid.npy")
     person_test = np.load("person_test.npy")
 
+    # Split train and valid. 90-10 split
+    X_train_valid_permute = np.random.permutation(X_train_valid)
+    split_ind = int(9 * X_train_valid.shape[0] / 10)
+    X_train, X_valid = X_train_valid[:split_ind], X_train_valid[split_ind:]
+    y_train, y_valid = y_train_valid[:split_ind], y_train_valid[split_ind:]
+
     original_x_test = X_test
     X_test, y_test = format_data(X_test, y_test)
-    X_train_valid, y_train_valid = format_data(X_train_valid, y_train_valid)
+    X_train, y_train = format_data(X_train, y_train)
+    X_valid, y_valid = format_data(X_valid, y_valid)
 
-    # print(X_test.shape)
-    # print(y_test.shape)
-    # print(X_train_valid.shape)
-    # print(y_train_valid.shape)
-
-    vae = VAE(X_train_valid.shape[1], 100, 3)
+    vae = VAE(X_train.shape[1], 64, 3)
     if weights:
         vae.load_weights(weights)
     else:
-        vae.train(X_train_valid, X_test, batch_size=128, epochs=1, use_mse=True)
+        vae.train(X_train, X_valid, batch_size=128, epochs=3, use_mse=True)
 
+    # Plot test data
     test_out = vae.forward(X_test)
     test_out = np.reshape(test_out, (-1, 1000, 3))
-    # print(test_out.shape)
-    # print(test_out)
-    plot_3D(vae, test_out, original_y_test, plot=True)
+    plot_3D(test_out, original_y_test, num_show=5, plot=True, file_name='vae_viz.mp4')
 
