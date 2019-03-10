@@ -40,68 +40,28 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.colors import cnames
 from matplotlib import animation
 
-def plot_results(models,
-                 data,
-                 batch_size=128,
-                 model_name="vae_mnist"):
-    """Plots labels and MNIST digits as a function of the 2D latent vector
-    # Arguments
-        models (tuple): encoder and decoder models
-        data (tuple): test data and label
-        batch_size (int): prediction batch size
-        model_name (string): which model is using this function
-    """
-
-    encoder, decoder = models
-    x_test, y_test = data
-    os.makedirs(model_name, exist_ok=True)
-
-    filename = os.path.join(model_name, "vae_mean.png")
-    # display a 2D plot of the digit classes in the latent space
-    z_mean, _, _ = encoder.predict(x_test,
-                                   batch_size=batch_size)
-    plt.figure(figsize=(12, 10))
-    plt.scatter(z_mean[:, 0], z_mean[:, 1], c=y_test)
-    plt.colorbar()
-    plt.xlabel("z[0]")
-    plt.ylabel("z[1]")
-    plt.savefig(filename)
-    plt.show()
-
-# Render stuff differently for ipython notebook
 # Based off code from following link
 # https://jakevdp.github.io/blog/2013/02/16/animating-the-lorentz-system-in-3d/
-def plot_3D(model, x_t, num_show=10, ipy=False):
+def plot_3D(model, x_t, y_t, num_show=10, plot=False):
 
-    N_trajectories = 20
+    t = np.arange(0, 1000)
+    rand_indexes = np.random.choice(x_t.shape[0], num_show, replace=False)
+    # print(rand_indexes)
+    x_t = x_t[rand_indexes, :, :]
+    y_t = y_t[rand_indexes]
 
-
-    def lorentz_deriv(xyz, t0, sigma=10., beta=8./3, rho=28.0):
-        """Compute the time-derivative of a Lorentz system."""
-        x, y, z = xyz
-        return [sigma * (y - x), x * (rho - z) - y, x * y - beta * z]
-
-
-    # Choose random starting points, uniformly distributed from -15 to 15
-    np.random.seed(1)
-    x0 = -15 + 30 * np.random.random((N_trajectories, 3))
-
-    # Solve for the trajectories
-    t = np.linspace(0, 4, 1000)
-    x_t = np.asarray([integrate.odeint(lorentz_deriv, x0i, t)
-                      for x0i in x0])
-
-    # t = np.arange(0, 1000)
-    # x_t = x_t[np.random.choice(x_t.shape[0], num_show, replace=False), :, :]
     # print(x_t.shape)
 
     # Set up figure & 3D axis for animation
     fig = plt.figure()
     ax = fig.add_axes([0, 0, 1, 1], projection='3d')
-    ax.axis('off')
+    ax.axis('on')
 
     # choose a different color for each trajectory
-    colors = plt.cm.jet(np.linspace(0, 1, x_t.shape[0]))
+    # colors = plt.cm.jet(np.linspace(0, 1, x_t.shape[0]))
+    # Different color for each action class.
+    colors = plt.cm.jet(y_t / float(np.amax(y_t)))
+    # print(colors)
 
     # set up lines and points
     lines = sum([ax.plot([], [], [], '-', c=c)
@@ -110,16 +70,12 @@ def plot_3D(model, x_t, num_show=10, ipy=False):
                for c in colors], [])
 
     # prepare the axes limits
-    ax.set_xlim((-25, 25))
-    ax.set_ylim((-35, 35))
-    ax.set_zlim((5, 55))
-    # ax.set_xlim((-5, 5))
-    # ax.set_ylim((-5, 5))
-    # ax.set_zlim((-5, 5))
+    ax.set_xlim((-2, 2))
+    ax.set_ylim((-2, 2))
+    ax.set_zlim((-2, 2))
 
     # set point-of-view: specified by (altitude degrees, azimuth degrees)
     ax.view_init(30, 0)
-    # ax.view_init(0, 0)
 
     # initialization function: plot the background of each frame
     def init():
@@ -133,6 +89,7 @@ def plot_3D(model, x_t, num_show=10, ipy=False):
 
     # animation function.  This will be called sequentially with the frame number
     def animate(i):
+        # we'll step two time-steps per frame.  This leads to nice results.
         i = (i) % x_t.shape[1]
 
         for line, pt, xi in zip(lines, pts, x_t):
@@ -144,7 +101,6 @@ def plot_3D(model, x_t, num_show=10, ipy=False):
             pt.set_3d_properties(z[-1:])
 
         ax.view_init(30, 0.3 * i)
-        # ax.view_init(0, 0.3 * i)
         fig.canvas.draw()
         return lines + pts
 
@@ -153,13 +109,9 @@ def plot_3D(model, x_t, num_show=10, ipy=False):
                                    frames=500, interval=30, blit=True)
 
     # Save as mp4. This requires mplayer or ffmpeg to be installed
-    anim.save('eeg_viz.mp4', fps=15, extra_args=['-vcodec', 'libx264'])
+    anim.save('vae_viz.mp4', fps=15, extra_args=['-vcodec', 'libx264'])
 
-    if ipy:
-        print("no plot for ipy")
-        # from IPython.display import HTML
-        # HTML(anim.to_jshtml())
-    else:
+    if plot:
         plt.show()
 
 # reparameterization trick
@@ -200,7 +152,7 @@ class VAE(object):
 
         # instantiate encoder model
         encoder = Model(inputs, [z_mean, z_log_var, z], name='encoder')
-        encoder.summary()
+        # encoder.summary()
         plot_model(encoder, to_file='vae_mlp_encoder.png', show_shapes=True)
 
         # build decoder model
@@ -210,7 +162,7 @@ class VAE(object):
 
         # instantiate decoder model
         decoder = Model(latent_inputs, outputs, name='decoder')
-        decoder.summary()
+        # decoder.summary()
         plot_model(decoder, to_file='vae_mlp_decoder.png', show_shapes=True)
 
         # instantiate VAE model
@@ -252,7 +204,7 @@ class VAE(object):
         vae_loss = K.mean(reconstruction_loss + kl_loss)
         vae.add_loss(vae_loss)
         vae.compile(optimizer='adam')
-        vae.summary()
+        # vae.summary()
         plot_model(vae,
                    to_file='vae_mlp.png',
                    show_shapes=True)
@@ -262,13 +214,19 @@ class VAE(object):
                 epochs=epochs,
                 batch_size=batch_size,
                 validation_data=(x_test, None))
-        # vae.save_weights('vae_mlp_mnist.h5')
+        vae.save_weights('vae_mlp_eeg.h5')
 
     def forward(self, x, batch_size=128):
         z_mean, _, _ = self.encoder.predict(x, batch_size=batch_size)
         return z_mean
 
+    def load_weights(self, weights):
+        self.vae.load_weights(weights)
+
 if __name__ == '__main__':
+
+    # weights = None
+    weights = "vae_mlp_eeg.h5"
 
     def format_data(x, y):
         x = np.swapaxes(x, 1, 2)
@@ -280,6 +238,7 @@ if __name__ == '__main__':
 
     X_test = np.load("X_test.npy")
     y_test = np.load("y_test.npy")
+    original_y_test = y_test-769
     person_train_valid = np.load("person_train_valid.npy")
     X_train_valid = np.load("X_train_valid.npy")
     y_train_valid = np.load("y_train_valid.npy")
@@ -289,21 +248,20 @@ if __name__ == '__main__':
     X_test, y_test = format_data(X_test, y_test)
     X_train_valid, y_train_valid = format_data(X_train_valid, y_train_valid)
 
-    print(X_test.shape)
-    print(y_test.shape)
-    print(X_train_valid.shape)
-    print(y_train_valid.shape)
+    # print(X_test.shape)
+    # print(y_test.shape)
+    # print(X_train_valid.shape)
+    # print(y_train_valid.shape)
 
     vae = VAE(X_train_valid.shape[1], 100, 3)
-    vae.train(X_train_valid, X_test, batch_size=128, epochs=1, use_mse=True)
+    if weights:
+        vae.load_weights(weights)
+    else:
+        vae.train(X_train_valid, X_test, batch_size=128, epochs=1, use_mse=True)
 
-    # models = (vae.encoder, vae.decoder)
-    # data = (X_test, y_test)
-    # plot_results(models,
-    #              data,
-    #              batch_size=128,
-    #              model_name="vae_eeg")
     test_out = vae.forward(X_test)
     test_out = np.reshape(test_out, (-1, 1000, 3))
-    plot_3D(vae, test_out)
+    # print(test_out.shape)
+    # print(test_out)
+    plot_3D(vae, test_out, original_y_test, plot=True)
 
