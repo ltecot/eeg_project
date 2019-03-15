@@ -3,9 +3,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from tensorflow.python import keras as kt
+
+import os
+import time 
+# os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
 import keras
 from keras.models import Model, Sequential
-from keras.layers import Input, LSTM, Dense, RNN, SimpleRNN
+from keras.layers import Input, LSTM, Dense, RNN, SimpleRNN, GRU, Embedding, Reshape
 from keras.utils import to_categorical
 from variational_autoencoder import VAE
 
@@ -13,6 +18,7 @@ from variational_autoencoder import VAE
 # plt.rcParams['figure.figsize'] = (10.0, 8.0) # set default size of plots
 # plt.rcParams['image.interpolation'] = 'nearest'
 # plt.rcParams['image.cmap'] = 'gray'
+start = time.time()
 
 X_test = np.load("X_test.npy")
 y_test = np.load("y_test.npy")
@@ -46,8 +52,8 @@ print("Categorical one-hot encoding:\n",k_y_train_categ[0:3])
 
 k_hidden_size = 200
 
-vae = VAE(k_X_train.shape[2], 64, 3)
-vae.load_weights("vae_mlp_eeg.h5")
+# vae = VAE(k_X_train.shape[2], 64, 3)
+# vae.load_weights("vae_mlp_eeg.h5")
 
 def convert_data(x, embedding_dim=3):
     old_shape = x.shape[:2]
@@ -58,22 +64,38 @@ def convert_data(x, embedding_dim=3):
     x = np.reshape(embedded_data, new_shape)
     return x
 
-use_embeddings = True
+use_embeddings = False
 if use_embeddings:
     k_X_train = convert_data(k_X_train)
     k_X_test = convert_data(k_X_test)
 
- 
-model = Sequential()
-model.add(SimpleRNN(k_hidden_size, input_shape=k_X_train.shape[1:]))
-model.add(Dense(4, activation='softmax'))
+hidden_sizes = [100, 200]
+learn_rates = [0.01, 0.005, 0.001, 0.0005]
+decays = [0.0, 0.005, 0.05, .1]
+l1_regs = [0.0, 0.0001, 0.001, 0.1]
+activations = ['tanh']
 
-model.compile(loss = 'categorical_crossentropy', 
-              optimizer='adam', 
+old_shape = k_X_train.shape
+
+def data_to_emb(shape, dtype):
+    return k_X_train
+
+time.sleep(1)
+lr = 0.005
+
+model = Sequential()
+model.add(LSTM(100, input_shape=k_X_train.shape[1:], activation='tanh'))
+model.add(Dense(4, activation='softmax'))
+# Optimizer
+adam = keras.optimizers.Adam(clipnorm=1)
+model.summary()
+model.compile(loss = 'categorical_crossentropy',
+              optimizer=adam,
               metrics=['accuracy'],)
 
-model.summary()
-model.fit(k_X_train, k_y_train_categ, epochs=10)
+# Train the model
+history = model.fit(k_X_train, k_y_train_categ, epochs=15, validation_split=0.1, batch_size=64)
 
-output = model.evaluate(k_X_test, k_y_test_categ)
-print(output)
+print("DONE! Total time: " + str(time.time()- start))
+
+
