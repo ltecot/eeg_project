@@ -32,6 +32,35 @@ import os
 
 from plotting_utils import plot_3D
 
+from sklearn.manifold import TSNE
+
+# Utils for translating data 
+
+def transform_data_with_VAE(vae_model, data):
+    """ Transform data with VAE. Input the VAE model
+        and the data. Can be any dimension as long as 
+        last dimension matches up with input dimension of VAE.
+    """
+    original_shape = data.shape
+    reshaped_data = np.reshape(data, (-1, original_shape[-1]))
+    out = vae_model.forward(reshaped_data)
+    new_shape = list(original_shape)
+    new_shape[-1] = out.shape[-1]
+    new_shape = tuple(new_shape)
+    return np.reshape(out, new_shape)
+
+def transform_data_with_TSNE(latent_dim, data):
+    """ Transform data with t-sne. Last dim will be 
+        transformed to the latent_dim.
+    """
+    original_shape = data.shape
+    reshaped_data = np.reshape(data, (-1, original_shape[-1]))
+    out = TSNE(n_components=3, verbose=1).fit_transform(reshaped_data)
+    new_shape = list(original_shape)
+    new_shape[-1] = out.shape[-1]
+    new_shape = tuple(new_shape)
+    return np.reshape(out, new_shape)
+
 # reparameterization trick
 # instead of sampling from Q(z|X), sample epsilon = N(0,I)
 # z = z_mean + sqrt(var) * epsilon
@@ -173,10 +202,18 @@ class VAE(object):
         z_mean, _, _ = self.encoder.predict(x, batch_size=batch_size)
         return z_mean
 
+    def reconstruct(self, x, batch_size=128):
+        ''' Re-create x data. For testing purposes
+        '''
+        z_mean, _, _ = self.encoder.predict(x, batch_size=batch_size)
+        xp = self.decoder.predict(z_mean, batch_size=batch_size)
+        return xp
+
+
 if __name__ == '__main__':
 
-    weights = None
-    # weights = "vae_mlp_eeg.h5"
+    # weights = None
+    weights = "vae_mlp_eeg.h5"
 
     def format_data(x, y):
         x = np.swapaxes(x, 1, 2)
@@ -211,8 +248,27 @@ if __name__ == '__main__':
     else:
         vae.train(X_train, X_valid, batch_size=128, epochs=3, use_mse=True)
 
-    # Plot test data
-    test_out = vae.forward(X_test)
-    test_out = np.reshape(test_out, (-1, 1000, 3))
-    plot_3D(test_out, original_y_test, num_show=5, plot=True, file_name='vae_viz.mp4')
+    inds_0 = np.where(original_y_test==0)
+    inds_1 = np.where(original_y_test==1)
+    inds_2 = np.where(original_y_test==2)
+    inds_3 = np.where(original_y_test==3)
+    # rand_indexes = np.concatenate((inds_0[0][:2], inds_1[0][:2], inds_2[0][:2], inds_3[0][:2]))
+    rand_indexes = np.concatenate((np.random.choice(inds_0[0], 2, replace=False),
+                                np.random.choice(inds_1[0], 2, replace=False),
+                                np.random.choice(inds_2[0], 2, replace=False),
+                                np.random.choice(inds_3[0], 2, replace=False)))
+    plot_y_test = original_y_test[rand_indexes]
+
+    # Plot test data, VAE
+    X_test_small = np.reshape(X_test, (-1, 1000, 22))
+    X_test_small = X_test_small[rand_indexes]
+    X_test_latent_vae = transform_data_with_VAE(vae, X_test_small)
+    plot_3D(X_test_latent_vae, plot_y_test, plot=True, file_name='vae_viz3.mp4')
+
+    # Plot test TSNE
+    # X_test_latent_tsne = transform_data_with_TSNE(3, X_test_small)
+    # plot_3D(X_test_latent_tsne, plot_y_test, plot=True, file_name='tsne_viz2.mp4')
+
+    # print("average difference", np.average(np.abs(X_valid - vae.reconstruct(X_valid))))
+    # print("average value", np.average(np.abs(X_valid)))
 
