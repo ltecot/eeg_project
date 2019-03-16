@@ -84,7 +84,7 @@ time.sleep(1)
 lr = 0.005
 
 model = Sequential()
-model.add(LSTM(100, input_shape=k_X_train.shape[1:], activation='tanh'))
+model.add(LSTM(100, input_shape=k_X_train.shape[1:], dropout=0.9))
 model.add(Dense(4, activation='softmax'))
 # Optimizer
 adam = keras.optimizers.Adam(clipnorm=1)
