@@ -64,9 +64,11 @@ def plot_3D(x_t, y_t, num_show=None, plot=False, file_name=None):
                for c in colors], [])
 
     # prepare the axes limits
-    ax.set_xlim((-2, 2))
-    ax.set_ylim((-2, 2))
-    ax.set_zlim((-2, 2))
+    max = np.max(x_t)
+    print("plotting, max for axis", max)
+    ax.set_xlim((-max, max))
+    ax.set_ylim((-max, max))
+    ax.set_zlim((-max, max))
 
     # set point-of-view: specified by (altitude degrees, azimuth degrees)
     ax.view_init(30, 0)
@@ -96,7 +98,7 @@ def plot_3D(x_t, y_t, num_show=None, plot=False, file_name=None):
 
     # instantiate the animator.
     anim = animation.FuncAnimation(fig, animate, init_func=init,
-                                   frames=500, interval=30, blit=True)
+                                   frames=x_t.shape[1], interval=30, blit=True)
 
     # Save as mp4. This requires mplayer or ffmpeg to be installed
     if file_name:
