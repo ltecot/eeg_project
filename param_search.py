@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
+#set seed for reproducability
+np.random.seed(1337)
+
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from tensorflow.python import keras as kt
@@ -14,7 +17,10 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import GridSearchCV
 from keras.layers import Dropout
 from keras import backend as be
+from keras.callbacks import CSVLogger
 import gc
+from variational_autoencoder import transform_data_with_VAE, VAE
+
 
 ### NOW FOR training
 def create_model(learn_rate=0.001, clip_value=1, cell_type='LSTM', num_units=100, dropout=False, add_conv=False, input_dim=None, num_filters=32, kernel_size=10, pool_size=5, stride_size=4):
@@ -101,28 +107,37 @@ if __name__ == '__main__':
     print ('Person train/valid shape: {}'.format(person_train_valid.shape))
     print ('Person test shape: {}'.format(person_test.shape))
 
-    X_train, X_valid, y_train, y_valid = train_test_split(X_train_valid, y_train_valid, test_size=0.2)
 
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X_train_valid, y_train_valid, test_size=0.2)
 
     X_train, y_train = transform_data(X_train, y_train)
     X_valid, y_valid = transform_data(X_valid, y_valid)
     X_test, y_test= transform_data(X_test, y_test)
 
-    # 
-    X_train, y_train= shuffle(np.concatenate((X_train, X_train, X_train, X_train, X_train, X_train)), np.concatenate((y_train, y_train, y_train, y_train, y_train, y_train)))
+    use_vae=False
+    if use_vae:
+        print("Tranforming data using VAE")
+        vae = VAE(X_train.shape[2], 64, 3)
+        vae.load_weights("vae_mlp_eeg.h5")
 
-    # X_train, y_train = crop_data_aug(X_train, y_train, 300)
+        X_train = transform_data_with_VAE(vae, X_train)
+        X_valid = transform_data_with_VAE(vae, X_valid)
+        X_test = transform_data_with_VAE(vae, X_test)
+
+    X_train, y_train= shuffle(np.concatenate((X_train, X_train, X_train, X_train, X_train, X_train)), np.concatenate((y_train, y_train, y_train, y_train, y_train, y_train)))
 
     input_dim = X_train.shape[1:]
 
     lr_scheduler = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1)
     early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=20, verbose=1)
+    csv_logger = CSVLogger('training.log')
 
 
     print("DATA READY FOR TRAINING!!!!")
     start = time.time()
     model = create_model(learn_rate=0.001, cell_type='GRU', num_units=64, dropout=True, add_conv=True, input_dim=input_dim, num_filters=64, pool_size=8, kernel_size=32, stride_size=4)
-    history = model.fit(X_train, y_train, epochs=250, batch_size=64, validation_data=(X_valid, y_valid), verbose=1, callbacks=[lr_scheduler, early_stopping])
+    history = model.fit(X_train, y_train, epochs=250, batch_size=64, validation_data=(X_valid, y_valid), verbose=1, callbacks=[lr_scheduler, csv_logger, early_stopping])
     print("Trained in {}".format(time.time()-start))
     print("val_acc max: {:.3f}  mean: {:.3f}".format(max(history.history['val_acc']), sum(history.history['val_acc']) / len(history.history['val_acc'])))
     print("\nTEST SET accuracy:")
@@ -158,8 +173,6 @@ if __name__ == '__main__':
                                         # results[key] = history.history
                                     # except:
                                         # results[key] = "EXCEPTION"
-
-
 
     # import pickle
     # f = open("dict.pkl", "wb+")
