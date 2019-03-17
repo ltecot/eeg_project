@@ -93,6 +93,9 @@ def transform_data(X, y, crop=False):
 
 
 if __name__ == '__main__':
+
+    logfile = 'training_no_vae.log'
+
     X_test = np.load("X_test.npy")
     y_test = np.load("y_test.npy")
     person_train_valid = np.load("person_train_valid.npy")
@@ -106,8 +109,6 @@ if __name__ == '__main__':
     print ('Test target shape: {}'.format(y_test.shape))
     print ('Person train/valid shape: {}'.format(person_train_valid.shape))
     print ('Person test shape: {}'.format(person_test.shape))
-
-
 
     X_train, X_valid, y_train, y_valid = train_test_split(X_train_valid, y_train_valid, test_size=0.2)
 
@@ -131,7 +132,7 @@ if __name__ == '__main__':
 
     lr_scheduler = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1)
     early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=20, verbose=1)
-    csv_logger = CSVLogger('training.log')
+    csv_logger = CSVLogger(logfile)
 
 
     print("DATA READY FOR TRAINING!!!!")
@@ -142,7 +143,7 @@ if __name__ == '__main__':
     print("val_acc max: {:.3f}  mean: {:.3f}".format(max(history.history['val_acc']), sum(history.history['val_acc']) / len(history.history['val_acc'])))
     print("\nTEST SET accuracy:")
     print(model.evaluate(X_test, y_test))
-    model.save("best.h5")
+    model.save_weights("best_weights.h5")
 
     # lrs = [0.01, 0.03, 0.001, 0.003, 0.001]#, 0.0003, 0.0001]
     # lrs = [0.03]
@@ -153,7 +154,6 @@ if __name__ == '__main__':
     # kernel_sizes =[8, 16, 32]
     # stride_sizes = [2, 4]
     # filter_sizes = [32, 64]
-
     # results = dict()
     # for lr in lrs:
         # for h_dim in num_hidden_dim:
