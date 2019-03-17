@@ -121,7 +121,7 @@ if __name__ == '__main__':
 
     print("DATA READY FOR TRAINING!!!!")
     start = time.time()
-    model = create_model(learn_rate=0.001, cell_type='GRU', num_units=64, dropout=True, add_conv=True, input_dim=input_dim, num_filters=32, pool_size=16, kernel_size=32, stride_size=4)
+    model = create_model(learn_rate=0.001, cell_type='GRU', num_units=64, dropout=True, add_conv=True, input_dim=input_dim, num_filters=64, pool_size=8, kernel_size=32, stride_size=4)
     history = model.fit(X_train, y_train, epochs=250, batch_size=64, validation_data=(X_valid, y_valid), verbose=1, callbacks=[lr_scheduler, early_stopping])
     print("Trained in {}".format(time.time()-start))
     print("val_acc max: {:.3f}  mean: {:.3f}".format(max(history.history['val_acc']), sum(history.history['val_acc']) / len(history.history['val_acc'])))
