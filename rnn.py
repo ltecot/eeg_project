@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+import time
 from tensorflow.python import keras as kt
 
 import os
@@ -76,24 +77,10 @@ activations = ['tanh']
 
 old_shape = k_X_train.shape
 
-def data_to_emb(shape, dtype):
-    return k_X_train
-
-time.sleep(1)
-lr = 0.005
-
-model = Sequential()
-model.add(LSTM(100, input_shape=k_X_train.shape[1:], dropout=0.9))
-model.add(Dense(4, activation='softmax'))
-# Optimizer
-adam = keras.optimizers.Adam(clipnorm=1)
-model.summary()
-model.compile(loss = 'categorical_crossentropy',
-              optimizer=adam,
-              metrics=['accuracy'],)
-
+from param_search import create_model
+model = create_model(cell_type='GRU', num_units=128, dropout=True, add_conv=True, input_dim=old_shape[1:])
 # Train the model
-history = model.fit(k_X_train, k_y_train_categ, epochs=15, validation_split=0.1, batch_size=64)
+history = model.fit(k_X_train, k_y_train_categ, epochs=500, validation_split=0.1, batch_size=256)
 
 print("DONE! Total time: " + str(time.time()- start))
 

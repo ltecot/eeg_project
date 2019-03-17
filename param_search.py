@@ -2,8 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from sklearn.model_selection import train_test_split
 from tensorflow.python import keras as kt
 import keras
+from sklearn.utils import shuffle
 from keras.models import Model, Sequential
 from keras.layers import Input, LSTM, Dense, RNN, SimpleRNN, GRU
 from keras.utils import to_categorical
@@ -14,47 +16,47 @@ from keras.layers import Dropout
 from keras import backend as be
 import gc
 
+### NOW FOR training
+def create_model(learn_rate=0.001, clip_value=1, cell_type='LSTM', num_units=100, dropout=False, add_conv=False, input_dim=None, num_filters=32, kernel_size=10, pool_size=5, stride_size=4):
+    model = Sequential()
+    if add_conv:
+        model.add(keras.layers.Conv1D(num_filters, kernel_size, input_shape=input_dim, strides=stride_size))
+        if dropout:
+            model.add(Dropout(0.5))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv1D(num_filters, kernel_size, input_shape=input_dim, strides=stride_size))
+        if dropout:
+            model.add(Dropout(0.5))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool1D(pool_size=pool_size))
+    if cell_type == 'LSTM':
+        model.add(keras.layers.CuDNNLSTM(num_units, input_shape=input_dim))
+    elif cell_type == 'GRU':
+        model.add(keras.layers.CuDNNGRU(num_units, input_shape=input_dim))
 
-X_test = np.load("X_test.npy")
-y_test = np.load("y_test.npy")
-person_train_valid = np.load("person_train_valid.npy")
-X_train_valid = np.load("X_train_valid.npy")
-y_train_valid = np.load("y_train_valid.npy")
-person_test = np.load("person_test.npy")
+    if dropout:
+        model.add(Dropout(0.5))
+    model.add(keras.layers.BatchNormalization())
+    model.add(Dense(4, activation="softmax"))
 
-print ('Training/Valid data shape: {}'.format(X_train_valid.shape))
-print ('Test data shape: {}'.format(X_test.shape))
-print ('Training/Valid target shape: {}'.format(y_train_valid.shape))
-print ('Test target shape: {}'.format(y_test.shape))
-print ('Person train/valid shape: {}'.format(person_train_valid.shape))
-print ('Person test shape: {}'.format(person_test.shape))
 
-idx_p0_train = np.where(person_train_valid == 0)[0]
-idx_p0_test = np.where(person_test == 0)[0]
+    optimizer = keras.optimizers.RMSprop(lr=learn_rate, clipvalue=1)
+    model.compile(loss="categorical_crossentropy",
+                  optimizer=optimizer,
+                  metrics=["accuracy"])
 
-p0_train_X = X_train_valid[idx_p0_train] 
-p0_train_y = y_train_valid[idx_p0_train]
-
-p0_test_X = X_test[idx_p0_test]
-p0_test_y = y_test[idx_p0_test]
-
-print(p0_train_X.shape)
-print(p0_train_y.shape)
-print(p0_test_X.shape)
-print(p0_test_y.shape)
+    return model
 
 def crop_data_aug(X, y, crop):
     crop_size = crop # 3 # 100
     original_train_X = X  # test_array_x # p0_train_X
     original_train_y = y # test_array_y # p0_train_y
 
-    N, C, T = original_train_X.shape
+    N, T, C = original_train_X.shape
     print("Original Data:", original_train_X.shape, original_train_y.shape)
-    #print("X", original_train_X[300:305], "Y", original_train_y[300:305])
     cropped_train_X = np.zeros((N*(T-crop_size+1), C, crop_size))
     cropped_train_y = np.zeros(N*(T-crop_size+1))
     crops_per_sample = T-crop_size+1
-
 
     for n in np.arange(N):
         crop_count = 0
@@ -68,116 +70,98 @@ def crop_data_aug(X, y, crop):
     
     return cropped_train_X, cropped_train_y
 
-# separate the train and val test sets before actually cropping 
-idx_val = np.arange(p0_train_X.shape[0])
-np.random.shuffle(idx_val)
-val_fraction = int(0.2*idx_val.shape[0])
 
-# separated train and test splits
-data_val_X = p0_train_X[0:val_fraction]
-data_val_y = p0_train_y[0:val_fraction]
-data_train_X = p0_train_X[val_fraction:]
-data_train_y = p0_train_y[val_fraction:]
+def transform_data(X, y, crop=False):
+    X = np.swapaxes(X, 1, 2)
+    print("Swapped axes:", X.shape)
+    X = X[: , : , :22 ]
+    print("Removed VOG channels:", X.shape)
+    # encode output labels
+    print("Raw labels:", y[0:10])
+    y = y- 769
+    print("Fixed:", y[0:10])
+    y = to_categorical(y, 4)
+    print("Categorical one-hot encoding:\n",y[0:3])
 
-# augment using cropping
-cropped_train_X, cropped_train_y = crop_data_aug(data_train_X, data_train_y, 300)
-cropped_val_X, cropped_val_y = crop_data_aug(data_val_X, data_val_y, 300)
-
-k_X_train = np.swapaxes(cropped_train_X, 1, 2)
-k_X_val = np.swapaxes(cropped_val_X, 1, 2)
-k_X_test = np.swapaxes(p0_test_X, 1, 2)
-print("Swapped axes:",k_X_train.shape, k_X_test.shape)
-# remove VOG channels (23-25)
-k_X_train = k_X_train[: , : , :22 ]
-k_X_val = k_X_val[:, :, :22]
-k_X_test = k_X_test[: , : , :22 ]
-print("Removed VOG channels:", k_X_train.shape, k_X_test.shape)
-
-# encode output labels
-print("Raw labels:", cropped_train_y[0:10])
-k_y_train = cropped_train_y - 769
-k_y_val = cropped_val_y - 769
-k_y_test = p0_test_y - 769
-print("Fixed:", k_y_train[0:10])
-k_y_train_categ = to_categorical(k_y_train, 4)
-k_y_val_categ = to_categorical(k_y_val, 4)
-k_y_test_categ = to_categorical(k_y_test, 4)
-print("Categorical one-hot encoding:\n",k_y_train_categ[0:3])
-
-input_dim = k_X_train.shape[1:]
-
-print("DATA READY FOR TRAINING!!!!")
-### NOW FOR training
-def create_model(learn_rate=0.001, clip_value=1, cell_type='LSTM', num_units=100, dropout=False, add_conv=False):
+    return (X, y)
 
 
-    model = Sequential()
+if __name__ == '__main__':
+    X_test = np.load("X_test.npy")
+    y_test = np.load("y_test.npy")
+    person_train_valid = np.load("person_train_valid.npy")
+    X_train_valid = np.load("X_train_valid.npy")
+    y_train_valid = np.load("y_train_valid.npy")
+    person_test = np.load("person_test.npy")
 
-    if add_conv:
-        model.add(keras.layers.Conv1D(22, 10, input_shape=input_dim))
-        if dropout:
-            model.add(Dropout(0.5))
-        model.add(keras.layers.BatchNormalization())
-        model.add(keras.layers.Conv1D(22, 10))
-        if dropout:
-            model.add(Dropout(0.5))
-        model.add(keras.layers.BatchNormalization())
+    print ('Training/Valid data shape: {}'.format(X_train_valid.shape))
+    print ('Test data shape: {}'.format(X_test.shape))
+    print ('Training/Valid target shape: {}'.format(y_train_valid.shape))
+    print ('Test target shape: {}'.format(y_test.shape))
+    print ('Person train/valid shape: {}'.format(person_train_valid.shape))
+    print ('Person test shape: {}'.format(person_test.shape))
 
-    if cell_type == 'LSTM':
-        model.add(keras.layers.CuDNNLSTM(num_units, input_shape=input_dim))
-    elif cell_type == 'GRU':
-        model.add(keras.layers.CuDNNGRU(num_units, input_shape=input_dim))
-
-    if dropout:
-        model.add(Dropout(0.5))
-
-    model.add(keras.layers.BatchNormalization())
-    model.add(Dense(4, activation="softmax"))
+    X_train, X_valid, y_train, y_valid = train_test_split(X_train_valid, y_train_valid, test_size=0.2)
 
 
-    optimizer = keras.optimizers.RMSprop(lr=learn_rate, clipvalue=1)
-    model.compile(loss="categorical_crossentropy",
-                  optimizer=optimizer,
-                  metrics=["accuracy"])
+    X_train, y_train = transform_data(X_train, y_train)
+    X_valid, y_valid = transform_data(X_valid, y_valid)
+    X_test, y_test= transform_data(X_test, y_test)
 
-    return model
+    # 
+    X_train, y_train= shuffle(np.concatenate((X_train, X_train, X_train, X_train, X_train, X_train)), np.concatenate((y_train, y_train, y_train, y_train, y_train, y_train)))
 
-lrs = [0.1, 0.03, 0.01, 0.003, 0.001, 0.0003, 0.0001]
-num_hidden_dim = [32, 64, 128]
-cell_types = ['LSTM', 'GRU']
-use_dropout = [False, True]
+    # X_train, y_train = crop_data_aug(X_train, y_train, 300)
 
-# model = KerasClassifier(build_fn=create_model, epochs=5, batch_size=256)
+    input_dim = X_train.shape[1:]
 
-# param_grid = dict(learn_rate=lrs, num_units=num_hidden_dim, cell_type = cell_types, dropout=use_dropout)
-# grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=1, pre_dispatch=1, refit=False)
-# grid_result = grid.fit(k_X_train, k_y_train_categ)
-
-# # summarize results
-# print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
-# means = grid_result.cv_results_['mean_test_score']
-# stds = grid_result.cv_results_['std_test_score']
-# params = grid_result.cv_results_['params']
-# for mean, stdev, param in zip(means, stds, params):
-        # print("%f (%f) with: %r" % (mean, stdev, param))
-results = dict()
-for lr in lrs:
-    for h_dim in num_hidden_dim:
-        for c_t in cell_types:
-            for d in use_dropout:
-                start = time.time()
-                key = (lr, h_dim, c_t, d, True)
-                model = create_model(learn_rate=lr, cell_type=c_t, num_units = h_dim, dropout=d, add_conv = True)
-                history = model.fit(k_X_train, k_y_train_categ, epochs=5, batch_size=256, validation_split=0.1, verbose=0)
-                results[key] = history.history
-
-                print("Trained {} in {}".format(key, time.time()-start))
-                print("val_acc: ", history.history['val_acc'][-1])
+    lr_scheduler = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1)
+    early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=20, verbose=1)
 
 
-import pickle
-f = open("dict.pkl", "wb+")
-pickle.dump(results, f)
-f.close()
+    print("DATA READY FOR TRAINING!!!!")
+    start = time.time()
+    model = create_model(learn_rate=0.001, cell_type='GRU', num_units=64, dropout=True, add_conv=True, input_dim=input_dim, num_filters=32, pool_size=16, kernel_size=32, stride_size=4)
+    history = model.fit(X_train, y_train, epochs=250, batch_size=64, validation_data=(X_valid, y_valid), verbose=1, callbacks=[lr_scheduler, early_stopping])
+    print("Trained in {}".format(time.time()-start))
+    print("val_acc max: {:.3f}  mean: {:.3f}".format(max(history.history['val_acc']), sum(history.history['val_acc']) / len(history.history['val_acc'])))
+    print("\nTEST SET accuracy:")
+    print(model.evaluate(X_test, y_test))
+    model.save("best.h5")
 
-                # print(test_model(learn_rate=lr, cell_type=c_t, num_units = h_dim, dropout=d, add_conv = True))
+    # lrs = [0.01, 0.03, 0.001, 0.003, 0.001]#, 0.0003, 0.0001]
+    # lrs = [0.03]
+    # num_hidden_dim = [64]
+    # cell_types = ['LSTM']
+    # use_dropout = [True]
+    # pool_sizes = [4,8, 16]
+    # kernel_sizes =[8, 16, 32]
+    # stride_sizes = [2, 4]
+    # filter_sizes = [32, 64]
+
+    # results = dict()
+    # for lr in lrs:
+        # for h_dim in num_hidden_dim:
+            # for c_t in cell_types:
+                # for d in use_dropout:
+                    # for pool_size in pool_sizes:
+                        # for kernel_size in kernel_sizes:
+                            # for num_filters in filter_sizes:
+                                # for ss in stride_sizes:
+                                    # key = (lr, h_dim, c_t, d, True, pool_size, kernel_size, num_filters, ss)
+                                    # try:
+                                        # start = time.time()
+                                        # model = create_model(learn_rate=lr, cell_type=c_t, num_units = h_dim, dropout=d, add_conv = True, input_dim=input_dim, num_filters=num_filters, pool_size=pool_size, kernel_size=kernel_size, stride_size=ss)
+                                        # history = model.fit(X_train, y_train, epochs=15, batch_size=128, validation_data=(X_valid, y_valid), verbose=0)
+                                        # print("Trained {} in {}".format(key, time.time()-start))
+                                        # print("val_acc: ", history.history['val_acc'][-1])
+                                        # results[key] = history.history
+                                    # except:
+                                        # results[key] = "EXCEPTION"
+
+
+
+    # import pickle
+    # f = open("dict.pkl", "wb+")
+    # pickle.dump(results, f)
+    # f.close()
