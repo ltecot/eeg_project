@@ -1,0 +1,1439 @@
+Params: (0.01, 64, 'LSTM', True, 2, 4, 2, 32)
+acc     max: 0.424  last: 0.411
+val_acc max: 0.317  last: 0.305
+Trained in 36.293
+
+Params: (0.01, 64, 'LSTM', True, 2, 4, 2, 64)
+acc     max: 0.454  last: 0.454
+val_acc max: 0.312  last: 0.279
+Trained in 43.944
+
+Params: (0.01, 64, 'LSTM', True, 2, 4, 4, 32)
+acc     max: 0.420  last: 0.420
+val_acc max: 0.426  last: 0.426
+Trained in 28.965
+
+Params: (0.01, 64, 'LSTM', True, 2, 4, 4, 64)
+acc     max: 0.437  last: 0.437
+val_acc max: 0.326  last: 0.303
+Trained in 30.429
+
+Params: (0.01, 64, 'LSTM', True, 2, 4, 8, 32)
+acc     max: 0.429  last: 0.429
+val_acc max: 0.395  last: 0.395
+Trained in 28.468
+
+Params: (0.01, 64, 'LSTM', True, 2, 4, 8, 64)
+acc     max: 0.487  last: 0.487
+val_acc max: 0.376  last: 0.359
+Trained in 25.461
+
+Params: (0.01, 64, 'LSTM', True, 2, 8, 2, 32)
+acc     max: 0.478  last: 0.478
+val_acc max: 0.426  last: 0.362
+Trained in 37.282
+
+Params: (0.01, 64, 'LSTM', True, 2, 8, 2, 64)
+acc     max: 0.468  last: 0.468
+val_acc max: 0.303  last: 0.284
+Trained in 50.459
+
+Params: (0.01, 64, 'LSTM', True, 2, 8, 4, 32)
+acc     max: 0.433  last: 0.433
+val_acc max: 0.392  last: 0.355
+Trained in 27.442
+
+Params: (0.01, 64, 'LSTM', True, 2, 8, 4, 64)
+acc     max: 0.482  last: 0.482
+val_acc max: 0.343  last: 0.333
+Trained in 34.634
+
+Params: (0.01, 64, 'LSTM', True, 2, 8, 8, 32)
+acc     max: 0.522  last: 0.522
+val_acc max: 0.506  last: 0.506
+Trained in 29.976
+
+Params: (0.01, 64, 'LSTM', True, 2, 8, 8, 64)
+acc     max: 0.594  last: 0.594
+val_acc max: 0.454  last: 0.452
+Trained in 26.695
+
+Params: (0.01, 64, 'LSTM', True, 2, 16, 2, 32)
+acc     max: 0.443  last: 0.437
+val_acc max: 0.319  last: 0.319
+Trained in 37.961
+
+Params: (0.01, 64, 'LSTM', True, 2, 16, 2, 64)
+acc     max: 0.493  last: 0.493
+val_acc max: 0.298  last: 0.277
+Trained in 51.168
+
+Params: (0.01, 64, 'LSTM', True, 2, 16, 4, 32)
+acc     max: 0.436  last: 0.434
+val_acc max: 0.331  last: 0.331
+Trained in 29.610
+
+Params: (0.01, 64, 'LSTM', True, 2, 16, 4, 64)
+acc     max: 0.532  last: 0.529
+val_acc max: 0.322  last: 0.312
+Trained in 37.211
+
+Params: (0.01, 64, 'LSTM', True, 2, 16, 8, 32)
+acc     max: 0.620  last: 0.620
+val_acc max: 0.522  last: 0.522
+Trained in 31.259
+
+Params: (0.01, 64, 'LSTM', True, 2, 16, 8, 64)
+acc     max: 0.699  last: 0.699
+val_acc max: 0.511  last: 0.511
+Trained in 28.689
+
+Params: (0.01, 64, 'LSTM', True, 2, 32, 2, 32)
+acc     max: 0.529  last: 0.529
+val_acc max: 0.288  last: 0.288
+Trained in 48.721
+
+Params: (0.01, 64, 'LSTM', True, 2, 32, 2, 64)
+acc     max: 0.628  last: 0.623
+val_acc max: 0.293  last: 0.267
+Trained in 69.466
+
+Params: (0.01, 64, 'LSTM', True, 2, 32, 4, 32)
+acc     max: 0.673  last: 0.673
+val_acc max: 0.574  last: 0.525
+Trained in 34.978
+
+Params: (0.01, 64, 'LSTM', True, 2, 32, 4, 64)
+acc     max: 0.672  last: 0.664
+val_acc max: 0.402  last: 0.395
+Trained in 41.766
+
+Params: (0.01, 64, 'LSTM', True, 2, 32, 8, 32)
+acc     max: 0.689  last: 0.678
+val_acc max: 0.548  last: 0.544
+Trained in 34.414
+
+Params: (0.01, 64, 'LSTM', True, 2, 32, 8, 64)
+acc     max: 0.804  last: 0.804
+val_acc max: 0.548  last: 0.520
+Trained in 34.955
+
+Params: (0.01, 64, 'LSTM', True, 4, 4, 2, 32)
+acc     max: 0.471  last: 0.471
+val_acc max: 0.364  last: 0.345
+Trained in 37.975
+
+Params: (0.01, 64, 'LSTM', True, 4, 4, 2, 64)
+acc     max: 0.450  last: 0.450
+val_acc max: 0.385  last: 0.369
+Trained in 50.707
+
+Params: (0.01, 64, 'LSTM', True, 4, 4, 4, 32)
+acc     max: 0.524  last: 0.524
+val_acc max: 0.482  last: 0.482
+Trained in 35.073
+
+Params: (0.01, 64, 'LSTM', True, 4, 4, 4, 64)
+acc     max: 0.395  last: 0.395
+val_acc max: 0.307  last: 0.288
+Trained in 38.356
+
+Params: (0.01, 64, 'LSTM', True, 4, 4, 8, 32)
+acc     max: 0.430  last: 0.430
+val_acc max: 0.407  last: 0.397
+Trained in 35.480
+
+Params: (0.01, 64, 'LSTM', True, 4, 4, 8, 64)
+acc     max: 0.465  last: 0.465
+val_acc max: 0.409  last: 0.385
+Trained in 34.556
+
+Params: (0.01, 64, 'LSTM', True, 4, 8, 2, 32)
+acc     max: 0.563  last: 0.563
+val_acc max: 0.466  last: 0.423
+Trained in 44.054
+
+Params: (0.01, 64, 'LSTM', True, 4, 8, 2, 64)
+acc     max: 0.464  last: 0.464
+val_acc max: 0.303  last: 0.291
+Trained in 50.323
+
+Params: (0.01, 64, 'LSTM', True, 4, 8, 4, 32)
+acc     max: 0.544  last: 0.544
+val_acc max: 0.485  last: 0.485
+Trained in 38.511
+
+Params: (0.01, 64, 'LSTM', True, 4, 8, 4, 64)
+acc     max: 0.601  last: 0.601
+val_acc max: 0.466  last: 0.452
+Trained in 38.904
+
+Params: (0.01, 64, 'LSTM', True, 4, 8, 8, 32)
+acc     max: 0.501  last: 0.501
+val_acc max: 0.466  last: 0.466
+Trained in 31.160
+
+Params: (0.01, 64, 'LSTM', True, 4, 8, 8, 64)
+acc     max: 0.608  last: 0.608
+val_acc max: 0.478  last: 0.478
+Trained in 38.543
+
+Params: (0.01, 64, 'LSTM', True, 4, 16, 2, 32)
+acc     max: 0.607  last: 0.607
+val_acc max: 0.395  last: 0.395
+Trained in 48.585
+
+Params: (0.01, 64, 'LSTM', True, 4, 16, 2, 64)
+acc     max: 0.512  last: 0.512
+val_acc max: 0.296  last: 0.279
+Trained in 62.076
+
+Params: (0.01, 64, 'LSTM', True, 4, 16, 4, 32)
+acc     max: 0.693  last: 0.693
+val_acc max: 0.619  last: 0.619
+Trained in 34.266
+
+Params: (0.01, 64, 'LSTM', True, 4, 16, 4, 64)
+acc     max: 0.537  last: 0.531
+val_acc max: 0.343  last: 0.338
+Trained in 41.034
+
+Params: (0.01, 64, 'LSTM', True, 4, 16, 8, 32)
+acc     max: 0.571  last: 0.571
+val_acc max: 0.494  last: 0.494
+Trained in 36.514
+
+Params: (0.01, 64, 'LSTM', True, 4, 16, 8, 64)
+acc     max: 0.725  last: 0.725
+val_acc max: 0.565  last: 0.539
+Trained in 38.363
+
+Params: (0.01, 64, 'LSTM', True, 4, 32, 2, 32)
+acc     max: 0.547  last: 0.547
+val_acc max: 0.336  last: 0.307
+Trained in 50.086
+
+Params: (0.01, 64, 'LSTM', True, 4, 32, 2, 64)
+acc     max: 0.619  last: 0.618
+val_acc max: 0.359  last: 0.343
+Trained in 68.997
+
+Params: (0.01, 64, 'LSTM', True, 4, 32, 4, 32)
+acc     max: 0.785  last: 0.785
+val_acc max: 0.591  last: 0.577
+Trained in 41.714
+
+Params: (0.01, 64, 'LSTM', True, 4, 32, 4, 64)
+acc     max: 0.840  last: 0.840
+val_acc max: 0.551  last: 0.551
+Trained in 47.597
+
+Params: (0.01, 64, 'LSTM', True, 4, 32, 8, 32)
+acc     max: 0.700  last: 0.700
+val_acc max: 0.560  last: 0.560
+Trained in 41.184
+
+Params: (0.01, 64, 'LSTM', True, 4, 32, 8, 64)
+acc     max: 0.824  last: 0.824
+val_acc max: 0.515  last: 0.515
+Trained in 43.900
+
+Params: (0.01, 64, 'LSTM', True, 8, 4, 2, 32)
+acc     max: 0.517  last: 0.517
+val_acc max: 0.388  last: 0.281
+Trained in 43.191
+
+Params: (0.01, 64, 'LSTM', True, 8, 4, 2, 64)
+acc     max: 0.504  last: 0.504
+val_acc max: 0.385  last: 0.385
+Trained in 56.513
+
+Params: (0.01, 64, 'LSTM', True, 8, 4, 4, 32)
+acc     max: 0.517  last: 0.517
+val_acc max: 0.423  last: 0.343
+Trained in 44.450
+
+Params: (0.01, 64, 'LSTM', True, 8, 4, 4, 64)
+acc     max: 0.493  last: 0.493
+val_acc max: 0.437  last: 0.397
+Trained in 46.973
+
+Params: (0.01, 64, 'LSTM', True, 8, 4, 8, 32)
+acc     max: 0.334  last: 0.332
+val_acc max: 0.340  last: 0.340
+Trained in 44.755
+
+Params: (0.01, 64, 'LSTM', True, 8, 4, 8, 64)
+acc     max: 0.391  last: 0.391
+val_acc max: 0.345  last: 0.319
+Trained in 41.043
+
+Params: (0.01, 64, 'LSTM', True, 8, 8, 2, 32)
+acc     max: 0.554  last: 0.554
+val_acc max: 0.421  last: 0.362
+Trained in 52.473
+
+Params: (0.01, 64, 'LSTM', True, 8, 8, 2, 64)
+acc     max: 0.489  last: 0.489
+val_acc max: 0.374  last: 0.374
+Trained in 63.347
+
+Params: (0.01, 64, 'LSTM', True, 8, 8, 4, 32)
+acc     max: 0.634  last: 0.634
+val_acc max: 0.539  last: 0.539
+Trained in 49.015
+
+Params: (0.01, 64, 'LSTM', True, 8, 8, 4, 64)
+acc     max: 0.447  last: 0.447
+val_acc max: 0.404  last: 0.404
+Trained in 52.374
+
+Params: (0.01, 64, 'LSTM', True, 8, 8, 8, 32)
+acc     max: 0.453  last: 0.453
+val_acc max: 0.430  last: 0.428
+Trained in 43.093
+
+Params: (0.01, 64, 'LSTM', True, 8, 8, 8, 64)
+acc     max: 0.546  last: 0.546
+val_acc max: 0.440  last: 0.414
+Trained in 44.642
+
+Params: (0.01, 64, 'LSTM', True, 8, 16, 2, 32)
+acc     max: 0.516  last: 0.516
+val_acc max: 0.343  last: 0.314
+Trained in 58.539
+
+Params: (0.01, 64, 'LSTM', True, 8, 16, 2, 64)
+acc     max: 0.545  last: 0.545
+val_acc max: 0.267  last: 0.258
+Trained in 72.995
+
+Params: (0.01, 64, 'LSTM', True, 8, 16, 4, 32)
+acc     max: 0.692  last: 0.692
+val_acc max: 0.560  last: 0.506
+Trained in 47.733
+
+Params: (0.01, 64, 'LSTM', True, 8, 16, 4, 64)
+acc     max: 0.676  last: 0.676
+val_acc max: 0.506  last: 0.404
+Trained in 58.400
+
+Params: (0.01, 64, 'LSTM', True, 8, 16, 8, 32)
+acc     max: 0.558  last: 0.558
+val_acc max: 0.494  last: 0.473
+Trained in 48.366
+
+Params: (0.01, 64, 'LSTM', True, 8, 16, 8, 64)
+acc     max: 0.703  last: 0.703
+val_acc max: 0.518  last: 0.492
+Trained in 57.301
+
+Params: (0.01, 64, 'LSTM', True, 8, 32, 2, 32)
+acc     max: 0.873  last: 0.873
+val_acc max: 0.520  last: 0.518
+Trained in 68.055
+
+Params: (0.01, 64, 'LSTM', True, 8, 32, 2, 64)
+acc     max: 0.659  last: 0.659
+val_acc max: 0.421  last: 0.395
+Trained in 87.682
+
+Params: (0.01, 64, 'LSTM', True, 8, 32, 4, 32)
+acc     max: 0.682  last: 0.682
+val_acc max: 0.539  last: 0.506
+Trained in 62.644
+
+Params: (0.01, 64, 'LSTM', True, 8, 32, 4, 64)
+acc     max: 0.789  last: 0.789
+val_acc max: 0.546  last: 0.546
+Trained in 68.420
+
+Params: (0.01, 64, 'LSTM', True, 8, 32, 8, 32)
+acc     max: 0.698  last: 0.698
+val_acc max: 0.558  last: 0.522
+Trained in 52.343
+
+Params: (0.01, 64, 'LSTM', True, 8, 32, 8, 64)
+acc     max: 0.850  last: 0.850
+val_acc max: 0.511  last: 0.511
+Trained in 65.212
+
+Params: (0.01, 64, 'GRU', True, 2, 4, 2, 32)
+acc     max: 0.424  last: 0.424
+val_acc max: 0.326  last: 0.314
+Trained in 73.377
+
+Params: (0.01, 64, 'GRU', True, 2, 4, 2, 64)
+acc     max: 0.435  last: 0.435
+val_acc max: 0.352  last: 0.352
+Trained in 82.904
+
+Params: (0.01, 64, 'GRU', True, 2, 4, 4, 32)
+acc     max: 0.601  last: 0.601
+val_acc max: 0.572  last: 0.572
+Trained in 57.650
+
+Params: (0.01, 64, 'GRU', True, 2, 4, 4, 64)
+acc     max: 0.458  last: 0.458
+val_acc max: 0.348  last: 0.331
+Trained in 70.304
+
+Params: (0.01, 64, 'GRU', True, 2, 4, 8, 32)
+acc     max: 0.416  last: 0.416
+val_acc max: 0.416  last: 0.395
+Trained in 56.919
+
+Params: (0.01, 64, 'GRU', True, 2, 4, 8, 64)
+acc     max: 0.485  last: 0.485
+val_acc max: 0.444  last: 0.444
+Trained in 69.511
+
+Params: (0.01, 64, 'GRU', True, 2, 8, 2, 32)
+acc     max: 0.438  last: 0.422
+val_acc max: 0.293  last: 0.277
+Trained in 79.631
+
+Params: (0.01, 64, 'GRU', True, 2, 8, 2, 64)
+acc     max: 0.483  last: 0.483
+val_acc max: 0.291  last: 0.255
+Trained in 90.713
+
+Params: (0.01, 64, 'GRU', True, 2, 8, 4, 32)
+acc     max: 0.416  last: 0.416
+val_acc max: 0.343  last: 0.286
+Trained in 62.386
+
+Params: (0.01, 64, 'GRU', True, 2, 8, 4, 64)
+acc     max: 0.451  last: 0.451
+val_acc max: 0.343  last: 0.340
+Trained in 76.843
+
+Params: (0.01, 64, 'GRU', True, 2, 8, 8, 32)
+acc     max: 0.494  last: 0.494
+val_acc max: 0.492  last: 0.489
+Trained in 61.146
+
+Params: (0.01, 64, 'GRU', True, 2, 8, 8, 64)
+acc     max: 0.556  last: 0.556
+val_acc max: 0.485  last: 0.478
+Trained in 62.868
+
+Params: (0.01, 64, 'GRU', True, 2, 16, 2, 32)
+acc     max: 0.477  last: 0.477
+val_acc max: 0.314  last: 0.265
+Trained in 86.181
+
+Params: (0.01, 64, 'GRU', True, 2, 16, 2, 64)
+acc     max: 0.493  last: 0.491
+val_acc max: 0.291  last: 0.251
+Trained in 101.280
+
+Params: (0.01, 64, 'GRU', True, 2, 16, 4, 32)
+acc     max: 0.553  last: 0.553
+val_acc max: 0.452  last: 0.409
+Trained in 66.692
+
+Params: (0.01, 64, 'GRU', True, 2, 16, 4, 64)
+acc     max: 0.556  last: 0.556
+val_acc max: 0.310  last: 0.293
+Trained in 83.125
+
+Params: (0.01, 64, 'GRU', True, 2, 16, 8, 32)
+acc     max: 0.614  last: 0.614
+val_acc max: 0.520  last: 0.520
+Trained in 79.634
+
+Params: (0.01, 64, 'GRU', True, 2, 16, 8, 64)
+acc     max: 0.656  last: 0.655
+val_acc max: 0.475  last: 0.475
+Trained in 81.928
+
+Params: (0.01, 64, 'GRU', True, 2, 32, 2, 32)
+acc     max: 0.538  last: 0.538
+val_acc max: 0.305  last: 0.298
+Trained in 95.818
+
+Params: (0.01, 64, 'GRU', True, 2, 32, 2, 64)
+acc     max: 0.603  last: 0.601
+val_acc max: 0.303  last: 0.286
+Trained in 115.664
+
+Params: (0.01, 64, 'GRU', True, 2, 32, 4, 32)
+acc     max: 0.636  last: 0.636
+val_acc max: 0.421  last: 0.395
+Trained in 73.259
+
+Params: (0.01, 64, 'GRU', True, 2, 32, 4, 64)
+acc     max: 0.672  last: 0.672
+val_acc max: 0.378  last: 0.371
+Trained in 92.143
+
+Params: (0.01, 64, 'GRU', True, 2, 32, 8, 32)
+acc     max: 0.689  last: 0.689
+val_acc max: 0.534  last: 0.534
+Trained in 70.869
+
+Params: (0.01, 64, 'GRU', True, 2, 32, 8, 64)
+acc     max: 0.816  last: 0.816
+val_acc max: 0.511  last: 0.504
+Trained in 88.726
+
+Params: (0.01, 64, 'GRU', True, 4, 4, 2, 32)
+acc     max: 0.610  last: 0.610
+val_acc max: 0.513  last: 0.513
+Trained in 78.191
+
+Params: (0.01, 64, 'GRU', True, 4, 4, 2, 64)
+acc     max: 0.467  last: 0.461
+val_acc max: 0.331  last: 0.293
+Trained in 102.929
+
+Params: (0.01, 64, 'GRU', True, 4, 4, 4, 32)
+acc     max: 0.633  last: 0.633
+val_acc max: 0.556  last: 0.530
+Trained in 74.201
+
+Params: (0.01, 64, 'GRU', True, 4, 4, 4, 64)
+acc     max: 0.623  last: 0.623
+val_acc max: 0.546  last: 0.546
+Trained in 77.365
+
+Params: (0.01, 64, 'GRU', True, 4, 4, 8, 32)
+acc     max: 0.442  last: 0.440
+val_acc max: 0.442  last: 0.430
+Trained in 74.228
+
+Params: (0.01, 64, 'GRU', True, 4, 4, 8, 64)
+acc     max: 0.482  last: 0.482
+val_acc max: 0.452  last: 0.449
+Trained in 75.442
+
+Params: (0.01, 64, 'GRU', True, 4, 8, 2, 32)
+acc     max: 0.679  last: 0.679
+val_acc max: 0.485  last: 0.447
+Trained in 81.801
+
+Params: (0.01, 64, 'GRU', True, 4, 8, 2, 64)
+^[^[acc     max: 0.638  last: 0.638
+val_acc max: 0.433  last: 0.428
+Trained in 109.160
+
+Params: (0.01, 64, 'GRU', True, 4, 8, 4, 32)
+acc     max: 0.663  last: 0.663
+val_acc max: 0.589  last: 0.589
+Trained in 79.148
+
+Params: (0.01, 64, 'GRU', True, 4, 8, 4, 64)
+acc     max: 0.655  last: 0.655
+val_acc max: 0.548  last: 0.548
+Trained in 81.468
+
+Params: (0.01, 64, 'GRU', True, 4, 8, 8, 32)
+acc     max: 0.507  last: 0.507
+val_acc max: 0.473  last: 0.463
+Trained in 95.608
+
+Params: (0.01, 64, 'GRU', True, 4, 8, 8, 64)
+acc     max: 0.630  last: 0.630
+val_acc max: 0.480  last: 0.480
+Trained in 97.541
+
+Params: (0.01, 64, 'GRU', True, 4, 16, 2, 32)
+acc     max: 0.813  last: 0.813
+val_acc max: 0.593  last: 0.572
+Trained in 108.429
+
+Params: (0.01, 64, 'GRU', True, 4, 16, 2, 64)
+acc     max: 0.823  last: 0.823
+val_acc max: 0.530  last: 0.499
+Trained in 121.138
+
+Params: (0.01, 64, 'GRU', True, 4, 16, 4, 32)
+acc     max: 0.735  last: 0.735
+val_acc max: 0.603  last: 0.584
+Trained in 83.958
+
+Params: (0.01, 64, 'GRU', True, 4, 16, 4, 64)
+acc     max: 0.760  last: 0.760
+val_acc max: 0.563  last: 0.522
+Trained in 87.865
+
+Params: (0.01, 64, 'GRU', True, 4, 16, 8, 32)
+acc     max: 0.586  last: 0.586
+val_acc max: 0.534  last: 0.480
+Trained in 83.024
+
+Params: (0.01, 64, 'GRU', True, 4, 16, 8, 64)
+acc     max: 0.688  last: 0.688
+val_acc max: 0.494  last: 0.485
+Trained in 103.489
+
+Params: (0.01, 64, 'GRU', True, 4, 32, 2, 32)
+acc     max: 0.793  last: 0.793
+val_acc max: 0.442  last: 0.397
+Trained in 115.497
+
+Params: (0.01, 64, 'GRU', True, 4, 32, 2, 64)
+acc     max: 0.877  last: 0.877
+val_acc max: 0.506  last: 0.480
+Trained in 135.638
+
+Params: (0.01, 64, 'GRU', True, 4, 32, 4, 32)
+acc     max: 0.800  last: 0.796
+val_acc max: 0.598  last: 0.556
+Trained in 109.027
+
+Params: (0.01, 64, 'GRU', True, 4, 32, 4, 64)
+acc     max: 0.849  last: 0.849
+val_acc max: 0.612  last: 0.586
+Trained in 115.515
+
+Params: (0.01, 64, 'GRU', True, 4, 32, 8, 32)
+acc     max: 0.743  last: 0.743
+val_acc max: 0.577  last: 0.577
+Trained in 109.213
+
+Params: (0.01, 64, 'GRU', True, 4, 32, 8, 64)
+acc     max: 0.833  last: 0.833
+val_acc max: 0.556  last: 0.546
+Trained in 113.156
+
+Params: (0.01, 64, 'GRU', True, 8, 4, 2, 32)
+acc     max: 0.518  last: 0.515
+val_acc max: 0.392  last: 0.385
+Trained in 116.254
+
+Params: (0.01, 64, 'GRU', True, 8, 4, 2, 64)
+acc     max: 0.675  last: 0.675
+val_acc max: 0.447  last: 0.421
+Trained in 126.543
+
+Params: (0.01, 64, 'GRU', True, 8, 4, 4, 32)
+acc     max: 0.560  last: 0.560
+val_acc max: 0.513  last: 0.437
+Trained in 91.870
+
+Params: (0.01, 64, 'GRU', True, 8, 4, 4, 64)
+acc     max: 0.608  last: 0.608
+val_acc max: 0.541  last: 0.518
+Trained in 95.349
+
+Params: (0.01, 64, 'GRU', True, 8, 4, 8, 32)
+acc     max: 0.375  last: 0.375
+val_acc max: 0.345  last: 0.336
+Trained in 92.670
+
+Params: (0.01, 64, 'GRU', True, 8, 4, 8, 64)
+acc     max: 0.398  last: 0.398
+val_acc max: 0.336  last: 0.307
+Trained in 116.761
+
+Params: (0.01, 64, 'GRU', True, 8, 8, 2, 32)
+acc     max: 0.763  last: 0.763
+val_acc max: 0.532  last: 0.466
+Trained in 123.459
+
+Params: (0.01, 64, 'GRU', True, 8, 8, 2, 64)
+acc     max: 0.682  last: 0.682
+val_acc max: 0.496  last: 0.475
+Trained in 135.235
+
+Params: (0.01, 64, 'GRU', True, 8, 8, 4, 32)
+acc     max: 0.640  last: 0.640
+val_acc max: 0.565  last: 0.520
+Trained in 97.156
+
+Params: (0.01, 64, 'GRU', True, 8, 8, 4, 64)
+acc     max: 0.691  last: 0.691
+val_acc max: 0.565  last: 0.556
+Trained in 124.006
+
+Params: (0.01, 64, 'GRU', True, 8, 8, 8, 32)
+acc     max: 0.466  last: 0.466
+val_acc max: 0.435  last: 0.435
+Trained in 97.666
+
+Params: (0.01, 64, 'GRU', True, 8, 8, 8, 64)
+acc     max: 0.552  last: 0.552
+val_acc max: 0.442  last: 0.440
+Trained in 122.987
+
+Params: (0.01, 64, 'GRU', True, 8, 16, 2, 32)
+acc     max: 0.850  last: 0.850
+val_acc max: 0.558  last: 0.544
+Trained in 132.253
+
+Params: (0.01, 64, 'GRU', True, 8, 16, 2, 64)
+acc     max: 0.770  last: 0.770
+val_acc max: 0.501  last: 0.461
+Trained in 146.556
+
+Params: (0.01, 64, 'GRU', True, 8, 16, 4, 32)
+acc     max: 0.680  last: 0.680
+val_acc max: 0.546  last: 0.485
+Trained in 128.534
+
+Params: (0.01, 64, 'GRU', True, 8, 16, 4, 64)
+acc     max: 0.748  last: 0.748
+val_acc max: 0.636  last: 0.482
+Trained in 135.825
+
+Params: (0.01, 64, 'GRU', True, 8, 16, 8, 32)
+acc     max: 0.594  last: 0.594
+val_acc max: 0.485  last: 0.485
+Trained in 135.128
+
+Params: (0.01, 64, 'GRU', True, 8, 16, 8, 64)
+acc     max: 0.705  last: 0.705
+val_acc max: 0.494  last: 0.494
+Trained in 133.687
+
+Params: (0.01, 64, 'GRU', True, 8, 32, 2, 32)
+acc     max: 0.897  last: 0.897
+val_acc max: 0.544  last: 0.511
+Trained in 146.898
+
+Params: (0.01, 64, 'GRU', True, 8, 32, 2, 64)
+acc     max: 0.916  last: 0.916
+val_acc max: 0.589  last: 0.532
+Trained in 167.909
+
+Params: (0.01, 64, 'GRU', True, 8, 32, 4, 32)
+acc     max: 0.778  last: 0.778
+val_acc max: 0.582  last: 0.579
+Trained in 139.508
+
+Params: (0.01, 64, 'GRU', True, 8, 32, 4, 64)
+acc     max: 0.810  last: 0.810
+val_acc max: 0.560  last: 0.548
+Trained in 148.573
+
+Params: (0.01, 64, 'GRU', True, 8, 32, 8, 32)
+acc     max: 0.712  last: 0.712
+val_acc max: 0.553  last: 0.553
+Trained in 138.073
+
+Params: (0.01, 64, 'GRU', True, 8, 32, 8, 64)
+acc     max: 0.847  last: 0.847
+val_acc max: 0.530  last: 0.530
+Trained in 139.926
+
+Params: (0.03, 64, 'LSTM', True, 2, 4, 2, 32)
+acc     max: 0.295  last: 0.288
+val_acc max: 0.279  last: 0.255
+Trained in 148.094
+
+Params: (0.03, 64, 'LSTM', True, 2, 4, 2, 64)
+acc     max: 0.296  last: 0.296
+val_acc max: 0.267  last: 0.225
+Trained in 158.135
+
+Params: (0.03, 64, 'LSTM', True, 2, 4, 4, 32)
+acc     max: 0.260  last: 0.253
+val_acc max: 0.279  last: 0.217
+Trained in 113.970
+
+Params: (0.03, 64, 'LSTM', True, 2, 4, 4, 64)
+acc     max: 0.274  last: 0.268
+val_acc max: 0.284  last: 0.255
+Trained in 144.748
+
+Params: (0.03, 64, 'LSTM', True, 2, 4, 8, 32)
+acc     max: 0.277  last: 0.277
+val_acc max: 0.298  last: 0.262
+Trained in 142.243
+
+Params: (0.03, 64, 'LSTM', True, 2, 4, 8, 64)
+acc     max: 0.273  last: 0.273
+val_acc max: 0.293  last: 0.293
+Trained in 144.324
+
+Params: (0.03, 64, 'LSTM', True, 2, 8, 2, 32)
+acc     max: 0.279  last: 0.274
+val_acc max: 0.293  last: 0.236
+Trained in 124.343
+
+Params: (0.03, 64, 'LSTM', True, 2, 8, 2, 64)
+acc     max: 0.265  last: 0.264
+val_acc max: 0.281  last: 0.279
+Trained in 165.882
+
+Params: (0.03, 64, 'LSTM', True, 2, 8, 4, 32)
+acc     max: 0.321  last: 0.321
+val_acc max: 0.364  last: 0.364
+Trained in 117.736
+
+Params: (0.03, 64, 'LSTM', True, 2, 8, 4, 64)
+acc     max: 0.279  last: 0.279
+val_acc max: 0.291  last: 0.236
+Trained in 151.423
+
+Params: (0.03, 64, 'LSTM', True, 2, 8, 8, 32)
+acc     max: 0.383  last: 0.383
+val_acc max: 0.385  last: 0.371
+Trained in 116.632
+
+Params: (0.03, 64, 'LSTM', True, 2, 8, 8, 64)
+acc     max: 0.333  last: 0.333
+val_acc max: 0.317  last: 0.307
+Trained in 149.125
+
+Params: (0.03, 64, 'LSTM', True, 2, 16, 2, 32)
+acc     max: 0.370  last: 0.271
+val_acc max: 0.381  last: 0.322
+Trained in 129.548
+
+Params: (0.03, 64, 'LSTM', True, 2, 16, 2, 64)
+acc     max: 0.291  last: 0.291
+val_acc max: 0.284  last: 0.265
+Trained in 175.625
+
+Params: (0.03, 64, 'LSTM', True, 2, 16, 4, 32)
+acc     max: 0.426  last: 0.426
+val_acc max: 0.395  last: 0.383
+Trained in 154.200
+
+Params: (0.03, 64, 'LSTM', True, 2, 16, 4, 64)
+acc     max: 0.276  last: 0.276
+val_acc max: 0.279  last: 0.255
+Trained in 127.232
+
+Params: (0.03, 64, 'LSTM', True, 2, 16, 8, 32)
+acc     max: 0.475  last: 0.475
+val_acc max: 0.442  last: 0.421
+Trained in 121.288
+
+Params: (0.03, 64, 'LSTM', True, 2, 16, 8, 64)
+acc     max: 0.369  last: 0.369
+val_acc max: 0.286  last: 0.260
+Trained in 156.289
+
+Params: (0.03, 64, 'LSTM', True, 2, 32, 2, 32)
+acc     max: 0.338  last: 0.338
+val_acc max: 0.286  last: 0.262
+Trained in 171.199
+
+Params: (0.03, 64, 'LSTM', True, 2, 32, 2, 64)
+acc     max: 0.359  last: 0.359
+val_acc max: 0.288  last: 0.277
+Trained in 190.610
+
+Params: (0.03, 64, 'LSTM', True, 2, 32, 4, 32)
+acc     max: 0.347  last: 0.346
+val_acc max: 0.293  last: 0.277
+Trained in 162.858
+
+Params: (0.03, 64, 'LSTM', True, 2, 32, 4, 64)
+acc     max: 0.425  last: 0.425
+val_acc max: 0.426  last: 0.426
+Trained in 135.200
+
+Params: (0.03, 64, 'LSTM', True, 2, 32, 8, 32)
+acc     max: 0.504  last: 0.500
+val_acc max: 0.499  last: 0.452
+Trained in 160.003
+
+Params: (0.03, 64, 'LSTM', True, 2, 32, 8, 64)
+acc     max: 0.597  last: 0.597
+val_acc max: 0.454  last: 0.454
+Trained in 165.703
+
+Params: (0.03, 64, 'LSTM', True, 4, 4, 2, 32)
+acc     max: 0.288  last: 0.286
+val_acc max: 0.284  last: 0.225
+Trained in 171.026
+
+Params: (0.03, 64, 'LSTM', True, 4, 4, 2, 64)
+acc     max: 0.277  last: 0.274
+val_acc max: 0.300  last: 0.279
+Trained in 183.584
+
+Params: (0.03, 64, 'LSTM', True, 4, 4, 4, 32)
+acc     max: 0.277  last: 0.277
+val_acc max: 0.279  last: 0.255
+Trained in 168.236
+
+Params: (0.03, 64, 'LSTM', True, 4, 4, 4, 64)
+acc     max: 0.262  last: 0.259
+val_acc max: 0.279  last: 0.270
+Trained in 172.588
+
+Params: (0.03, 64, 'LSTM', True, 4, 4, 8, 32)
+acc     max: 0.309  last: 0.309
+val_acc max: 0.284  last: 0.246
+Trained in 168.828
+
+Params: (0.03, 64, 'LSTM', True, 4, 4, 8, 64)
+acc     max: 0.301  last: 0.300
+val_acc max: 0.288  last: 0.267
+Trained in 171.699
+
+Params: (0.03, 64, 'LSTM', True, 4, 8, 2, 32)
+acc     max: 0.272  last: 0.271
+val_acc max: 0.288  last: 0.286
+Trained in 180.133
+
+Params: (0.03, 64, 'LSTM', True, 4, 8, 2, 64)
+acc     max: 0.278  last: 0.274
+val_acc max: 0.281  last: 0.239
+Trained in 191.828
+
+Params: (0.03, 64, 'LSTM', True, 4, 8, 4, 32)
+acc     max: 0.271  last: 0.271
+val_acc max: 0.279  last: 0.253
+Trained in 176.817
+
+Params: (0.03, 64, 'LSTM', True, 4, 8, 4, 64)
+acc     max: 0.268  last: 0.257
+val_acc max: 0.291  last: 0.279
+Trained in 179.439
+
+Params: (0.03, 64, 'LSTM', True, 4, 8, 8, 32)
+acc     max: 0.458  last: 0.458
+val_acc max: 0.463  last: 0.463
+Trained in 177.976
+
+Params: (0.03, 64, 'LSTM', True, 4, 8, 8, 64)
+acc     max: 0.342  last: 0.342
+val_acc max: 0.343  last: 0.314
+Trained in 180.367
+
+Params: (0.03, 64, 'LSTM', True, 4, 16, 2, 32)
+acc     max: 0.403  last: 0.403
+val_acc max: 0.381  last: 0.352
+Trained in 189.773
+
+Params: (0.03, 64, 'LSTM', True, 4, 16, 2, 64)
+acc     max: 0.281  last: 0.281
+val_acc max: 0.284  last: 0.260
+Trained in 205.758
+
+Params: (0.03, 64, 'LSTM', True, 4, 16, 4, 32)
+acc     max: 0.427  last: 0.427
+val_acc max: 0.392  last: 0.362
+Trained in 145.702
+
+Params: (0.03, 64, 'LSTM', True, 4, 16, 4, 64)
+acc     max: 0.317  last: 0.317
+val_acc max: 0.291  last: 0.258
+Trained in 187.984
+
+Params: (0.03, 64, 'LSTM', True, 4, 16, 8, 32)
+acc     max: 0.505  last: 0.505
+val_acc max: 0.518  last: 0.501
+Trained in 184.757
+
+Params: (0.03, 64, 'LSTM', True, 4, 16, 8, 64)
+acc     max: 0.542  last: 0.542
+val_acc max: 0.496  last: 0.433
+Trained in 187.282
+
+Params: (0.03, 64, 'LSTM', True, 4, 32, 2, 32)
+acc     max: 0.335  last: 0.335
+val_acc max: 0.288  last: 0.277
+Trained in 203.165
+
+Params: (0.03, 64, 'LSTM', True, 4, 32, 2, 64)
+acc     max: 0.350  last: 0.350
+val_acc max: 0.262  last: 0.246
+Trained in 221.053
+
+Params: (0.03, 64, 'LSTM', True, 4, 32, 4, 32)
+acc     max: 0.533  last: 0.533
+val_acc max: 0.515  last: 0.494
+Trained in 152.767
+
+Params: (0.03, 64, 'LSTM', True, 4, 32, 4, 64)
+acc     max: 0.485  last: 0.485
+val_acc max: 0.371  last: 0.369
+Trained in 199.933
+
+Params: (0.03, 64, 'LSTM', True, 4, 32, 8, 32)
+acc     max: 0.590  last: 0.590
+val_acc max: 0.532  last: 0.496
+Trained in 195.034
+
+Params: (0.03, 64, 'LSTM', True, 4, 32, 8, 64)
+acc     max: 0.634  last: 0.634
+val_acc max: 0.499  last: 0.428
+Trained in 198.920
+
+Params: (0.03, 64, 'LSTM', True, 8, 4, 2, 32)
+acc     max: 0.267  last: 0.265
+val_acc max: 0.314  last: 0.246
+Trained in 202.355
+
+Params: (0.03, 64, 'LSTM', True, 8, 4, 2, 64)
+acc     max: 0.275  last: 0.271
+val_acc max: 0.281  last: 0.229
+Trained in 213.318
+
+Params: (0.03, 64, 'LSTM', True, 8, 4, 4, 32)
+acc     max: 0.298  last: 0.298
+val_acc max: 0.288  last: 0.286
+Trained in 200.991
+
+Params: (0.03, 64, 'LSTM', True, 8, 4, 4, 64)
+acc     max: 0.291  last: 0.291
+val_acc max: 0.314  last: 0.314
+Trained in 205.199
+
+Params: (0.03, 64, 'LSTM', True, 8, 4, 8, 32)
+acc     max: 0.296  last: 0.291
+val_acc max: 0.286  last: 0.270
+Trained in 202.494
+
+Params: (0.03, 64, 'LSTM', True, 8, 4, 8, 64)
+acc     max: 0.282  last: 0.280
+val_acc max: 0.298  last: 0.281
+Trained in 204.947
+
+Params: (0.03, 64, 'LSTM', True, 8, 8, 2, 32)
+acc     max: 0.279  last: 0.279
+val_acc max: 0.279  last: 0.253
+Trained in 212.198
+
+Params: (0.03, 64, 'LSTM', True, 8, 8, 2, 64)
+acc     max: 0.268  last: 0.268
+val_acc max: 0.279  last: 0.248
+Trained in 224.477
+
+Params: (0.03, 64, 'LSTM', True, 8, 8, 4, 32)
+acc     max: 0.270  last: 0.268
+val_acc max: 0.293  last: 0.262
+Trained in 162.706
+
+Params: (0.03, 64, 'LSTM', True, 8, 8, 4, 64)
+acc     max: 0.294  last: 0.294
+val_acc max: 0.312  last: 0.291
+Trained in 212.048
+
+Params: (0.03, 64, 'LSTM', True, 8, 8, 8, 32)
+acc     max: 0.344  last: 0.344
+val_acc max: 0.331  last: 0.331
+Trained in 210.249
+
+Params: (0.03, 64, 'LSTM', True, 8, 8, 8, 64)
+acc     max: 0.339  last: 0.339
+val_acc max: 0.329  last: 0.329
+Trained in 213.696
+
+Params: (0.03, 64, 'LSTM', True, 8, 16, 2, 32)
+acc     max: 0.393  last: 0.391
+val_acc max: 0.371  last: 0.305
+Trained in 222.509
+
+Params: (0.03, 64, 'LSTM', True, 8, 16, 2, 64)
+acc     max: 0.276  last: 0.276
+val_acc max: 0.279  last: 0.270
+Trained in 237.231
+
+Params: (0.03, 64, 'LSTM', True, 8, 16, 4, 32)
+acc     max: 0.407  last: 0.407
+val_acc max: 0.319  last: 0.307
+Trained in 221.206
+
+Params: (0.03, 64, 'LSTM', True, 8, 16, 4, 64)
+acc     max: 0.422  last: 0.422
+val_acc max: 0.376  last: 0.329
+Trained in 174.151
+
+Params: (0.03, 64, 'LSTM', True, 8, 16, 8, 32)
+acc     max: 0.433  last: 0.433
+val_acc max: 0.423  last: 0.397
+Trained in 166.710
+
+Params: (0.03, 64, 'LSTM', True, 8, 16, 8, 64)
+acc     max: 0.469  last: 0.469
+val_acc max: 0.437  last: 0.392
+Trained in 169.907
+
+Params: (0.03, 64, 'LSTM', True, 8, 32, 2, 32)
+acc     max: 0.388  last: 0.388
+val_acc max: 0.359  last: 0.281
+Trained in 182.982
+
+Params: (0.03, 64, 'LSTM', True, 8, 32, 2, 64)
+acc     max: 0.269  last: 0.269
+val_acc max: 0.286  last: 0.258
+Trained in 250.949
+
+Params: (0.03, 64, 'LSTM', True, 8, 32, 4, 32)
+acc     max: 0.606  last: 0.606
+val_acc max: 0.461  last: 0.383
+Trained in 227.329
+
+Params: (0.03, 64, 'LSTM', True, 8, 32, 4, 64)
+acc     max: 0.522  last: 0.522
+val_acc max: 0.435  last: 0.430
+Trained in 234.915
+
+Params: (0.03, 64, 'LSTM', True, 8, 32, 8, 32)
+acc     max: 0.515  last: 0.515
+val_acc max: 0.454  last: 0.428
+Trained in 229.679
+
+Params: (0.03, 64, 'LSTM', True, 8, 32, 8, 64)
+acc     max: 0.586  last: 0.586
+val_acc max: 0.494  last: 0.494
+Trained in 179.512
+
+Params: (0.03, 64, 'GRU', True, 2, 4, 2, 32)
+acc     max: 0.290  last: 0.289
+val_acc max: 0.286  last: 0.255
+Trained in 239.655
+
+Params: (0.03, 64, 'GRU', True, 2, 4, 2, 64)
+acc     max: 0.285  last: 0.285
+val_acc max: 0.284  last: 0.206
+Trained in 254.938
+
+Params: (0.03, 64, 'GRU', True, 2, 4, 4, 32)
+acc     max: 0.287  last: 0.287
+val_acc max: 0.291  last: 0.291
+Trained in 239.486
+
+Params: (0.03, 64, 'GRU', True, 2, 4, 4, 64)
+acc     max: 0.269  last: 0.259
+val_acc max: 0.281  last: 0.255
+Trained in 187.820
+
+Params: (0.03, 64, 'GRU', True, 2, 4, 8, 32)
+acc     max: 0.281  last: 0.280
+val_acc max: 0.288  last: 0.246
+Trained in 237.898
+
+Params: (0.03, 64, 'GRU', True, 2, 4, 8, 64)
+acc     max: 0.305  last: 0.296
+val_acc max: 0.338  last: 0.288
+Trained in 244.396
+
+Params: (0.03, 64, 'GRU', True, 2, 8, 2, 32)
+acc     max: 0.293  last: 0.293
+val_acc max: 0.314  last: 0.274
+Trained in 254.851
+
+Params: (0.03, 64, 'GRU', True, 2, 8, 2, 64)
+acc     max: 0.289  last: 0.281
+val_acc max: 0.298  last: 0.281
+Trained in 268.462
+
+Params: (0.03, 64, 'GRU', True, 2, 8, 4, 32)
+acc     max: 0.406  last: 0.406
+val_acc max: 0.426  last: 0.411
+Trained in 250.509
+
+Params: (0.03, 64, 'GRU', True, 2, 8, 4, 64)
+acc     max: 0.382  last: 0.382
+val_acc max: 0.400  last: 0.381
+Trained in 195.792
+
+Params: (0.03, 64, 'GRU', True, 2, 8, 8, 32)
+acc     max: 0.369  last: 0.367
+val_acc max: 0.392  last: 0.390
+Trained in 247.527
+
+Params: (0.03, 64, 'GRU', True, 2, 8, 8, 64)
+acc     max: 0.441  last: 0.441
+val_acc max: 0.411  last: 0.411
+Trained in 257.709
+
+Params: (0.03, 64, 'GRU', True, 2, 16, 2, 32)
+acc     max: 0.455  last: 0.455
+val_acc max: 0.409  last: 0.395
+Trained in 267.884
+
+Params: (0.03, 64, 'GRU', True, 2, 16, 2, 64)
+acc     max: 0.466  last: 0.466
+val_acc max: 0.397  last: 0.397
+Trained in 284.005
+
+Params: (0.03, 64, 'GRU', True, 2, 16, 4, 32)
+acc     max: 0.469  last: 0.469
+val_acc max: 0.433  last: 0.433
+Trained in 262.528
+
+Params: (0.03, 64, 'GRU', True, 2, 16, 4, 64)
+acc     max: 0.395  last: 0.395
+val_acc max: 0.423  last: 0.423
+Trained in 204.664
+
+Params: (0.03, 64, 'GRU', True, 2, 16, 8, 32)
+acc     max: 0.461  last: 0.461
+val_acc max: 0.447  last: 0.440
+Trained in 260.506
+
+Params: (0.03, 64, 'GRU', True, 2, 16, 8, 64)
+acc     max: 0.490  last: 0.488
+val_acc max: 0.482  last: 0.482
+Trained in 201.653
+
+Params: (0.03, 64, 'GRU', True, 2, 32, 2, 32)
+acc     max: 0.518  last: 0.518
+val_acc max: 0.423  last: 0.423
+Trained in 214.102
+
+Params: (0.03, 64, 'GRU', True, 2, 32, 2, 64)
+acc     max: 0.608  last: 0.608
+val_acc max: 0.440  last: 0.421
+Trained in 298.958
+
+Params: (0.03, 64, 'GRU', True, 2, 32, 4, 32)
+acc     max: 0.478  last: 0.476
+val_acc max: 0.487  last: 0.402
+Trained in 206.811
+
+Params: (0.03, 64, 'GRU', True, 2, 32, 4, 64)
+acc     max: 0.511  last: 0.511
+val_acc max: 0.470  last: 0.470
+Trained in 274.999
+
+Params: (0.03, 64, 'GRU', True, 2, 32, 8, 32)
+acc     max: 0.575  last: 0.575
+val_acc max: 0.534  last: 0.534
+Trained in 272.812
+
+Params: (0.03, 64, 'GRU', True, 2, 32, 8, 64)
+acc     max: 0.582  last: 0.581
+val_acc max: 0.511  last: 0.463
+Trained in 282.804
+
+Params: (0.03, 64, 'GRU', True, 4, 4, 2, 32)
+acc     max: 0.288  last: 0.285
+val_acc max: 0.279  last: 0.258
+Trained in 285.279
+
+Params: (0.03, 64, 'GRU', True, 4, 4, 2, 64)
+acc     max: 0.286  last: 0.286
+val_acc max: 0.291  last: 0.229
+Trained in 297.497
+
+Params: (0.03, 64, 'GRU', True, 4, 4, 4, 32)
+acc     max: 0.324  last: 0.324
+val_acc max: 0.340  last: 0.303
+Trained in 284.077
+
+Params: (0.03, 64, 'GRU', True, 4, 4, 4, 64)
+acc     max: 0.313  last: 0.313
+val_acc max: 0.333  last: 0.319
+Trained in 286.127
+
+Params: (0.03, 64, 'GRU', True, 4, 4, 8, 32)
+acc     max: 0.337  last: 0.335
+val_acc max: 0.388  last: 0.388
+Trained in 217.989
+
+Params: (0.03, 64, 'GRU', True, 4, 4, 8, 64)
+acc     max: 0.278  last: 0.273
+val_acc max: 0.300  last: 0.272
+Trained in 285.235
+
+Params: (0.03, 64, 'GRU', True, 4, 8, 2, 32)
+acc     max: 0.265  last: 0.262
+val_acc max: 0.288  last: 0.248
+Trained in 297.839
+
+Params: (0.03, 64, 'GRU', True, 4, 8, 2, 64)
+acc     max: 0.266  last: 0.257
+val_acc max: 0.310  last: 0.258
+Trained in 238.249
+
+Params: (0.03, 64, 'GRU', True, 4, 8, 4, 32)
+acc     max: 0.359  last: 0.359
+val_acc max: 0.366  last: 0.345
+Trained in 220.122
+
+Params: (0.03, 64, 'GRU', True, 4, 8, 4, 64)
+acc     max: 0.270  last: 0.266
+val_acc max: 0.298  last: 0.253
+Trained in 222.036
+
+Params: (0.03, 64, 'GRU', True, 4, 8, 8, 32)
+acc     max: 0.414  last: 0.414
+val_acc max: 0.454  last: 0.426
+Trained in 219.696
+
+Params: (0.03, 64, 'GRU', True, 4, 8, 8, 64)
+acc     max: 0.471  last: 0.471
+val_acc max: 0.442  last: 0.442
+Trained in 299.792
+
+Params: (0.03, 64, 'GRU', True, 4, 16, 2, 32)
+acc     max: 0.456  last: 0.456
+val_acc max: 0.404  last: 0.385
+Trained in 311.302
+
+Params: (0.03, 64, 'GRU', True, 4, 16, 2, 64)
+acc     max: 0.466  last: 0.466
+val_acc max: 0.407  last: 0.345
+Trained in 250.860
+
+Params: (0.03, 64, 'GRU', True, 4, 16, 4, 32)
+acc     max: 0.384  last: 0.384
+val_acc max: 0.423  last: 0.423
+Trained in 227.942
+
+Params: (0.03, 64, 'GRU', True, 4, 16, 4, 64)
+acc     max: 0.430  last: 0.430
+val_acc max: 0.418  last: 0.418
+Trained in 232.812
+
+Params: (0.03, 64, 'GRU', True, 4, 16, 8, 32)
+acc     max: 0.479  last: 0.479
+val_acc max: 0.489  last: 0.489
+Trained in 305.959
+
+Params: (0.03, 64, 'GRU', True, 4, 16, 8, 64)
+acc     max: 0.493  last: 0.493
+val_acc max: 0.520  last: 0.520
+Trained in 234.792
+
+Params: (0.03, 64, 'GRU', True, 4, 32, 2, 32)
+acc     max: 0.598  last: 0.598
+val_acc max: 0.456  last: 0.456
+Trained in 320.499
+
+Params: (0.03, 64, 'GRU', True, 4, 32, 2, 64)
+acc     max: 0.624  last: 0.624
+val_acc max: 0.459  last: 0.459
+Trained in 349.805
+
+Params: (0.03, 64, 'GRU', True, 4, 32, 4, 32)
+acc     max: 0.526  last: 0.526
+val_acc max: 0.520  last: 0.515
+Trained in 326.271
+
+Params: (0.03, 64, 'GRU', True, 4, 32, 4, 64)
+acc     max: 0.624  last: 0.624
+val_acc max: 0.527  last: 0.480
+Trained in 251.007
+
+Params: (0.03, 64, 'GRU', True, 4, 32, 8, 32)
+acc     max: 0.578  last: 0.578
+val_acc max: 0.518  last: 0.485
+Trained in 325.070
+
+Params: (0.03, 64, 'GRU', True, 4, 32, 8, 64)
+acc     max: 0.672  last: 0.672
+val_acc max: 0.504  last: 0.504
+Trained in 400.476
+
+Params: (0.03, 64, 'GRU', True, 8, 4, 2, 32)
+acc     max: 0.309  last: 0.309
+val_acc max: 0.286  last: 0.241
+Trained in 342.414
+
+Params: (0.03, 64, 'GRU', True, 8, 4, 2, 64)
+acc     max: 0.258  last: 0.252
+val_acc max: 0.279  last: 0.253
+Trained in 351.116
+
+Params: (0.03, 64, 'GRU', True, 8, 4, 4, 32)
+acc     max: 0.344  last: 0.344
+val_acc max: 0.345  last: 0.340
+Trained in 253.782
+
+Params: (0.03, 64, 'GRU', True, 8, 4, 4, 64)
+acc     max: 0.289  last: 0.289
+val_acc max: 0.279  last: 0.255
+Trained in 335.318
+
+Params: (0.03, 64, 'GRU', True, 8, 4, 8, 32)
+acc     max: 0.289  last: 0.281
+val_acc max: 0.279  last: 0.274
+Trained in 340.935
+
+Params: (0.03, 64, 'GRU', True, 8, 4, 8, 64)
+acc     max: 0.291  last: 0.291
+val_acc max: 0.324  last: 0.324
+Trained in 346.776
+
+Params: (0.03, 64, 'GRU', True, 8, 8, 2, 32)
+acc     max: 0.396  last: 0.396
+val_acc max: 0.385  last: 0.374
+Trained in 358.273
+
+Params: (0.03, 64, 'GRU', True, 8, 8, 2, 64)
+acc     max: 0.356  last: 0.356
+val_acc max: 0.374  last: 0.374
+Trained in 278.173
+
+Params: (0.03, 64, 'GRU', True, 8, 8, 4, 32)
+acc     max: 0.444  last: 0.444
+val_acc max: 0.418  last: 0.319
+Trained in 256.356
+
+Params: (0.03, 64, 'GRU', True, 8, 8, 4, 64)
+acc     max: 0.350  last: 0.350
+val_acc max: 0.383  last: 0.248
+Trained in 259.510
+
+Params: (0.03, 64, 'GRU', True, 8, 8, 8, 32)
+acc     max: 0.338  last: 0.338
+val_acc max: 0.338  last: 0.322
+Trained in 347.074
+
+Params: (0.03, 64, 'GRU', True, 8, 8, 8, 64)
+acc     max: 0.359  last: 0.352
+val_acc max: 0.336  last: 0.312
+Trained in 357.461
+
+Params: (0.03, 64, 'GRU', True, 8, 16, 2, 32)
+acc     max: 0.470  last: 0.470
+val_acc max: 0.461  last: 0.418
+Trained in 371.547
+
+Params: (0.03, 64, 'GRU', True, 8, 16, 2, 64)
+acc     max: 0.488  last: 0.488
+val_acc max: 0.423  last: 0.404
+Trained in 288.334
+
+Params: (0.03, 64, 'GRU', True, 8, 16, 4, 32)
+acc     max: 0.594  last: 0.592
+val_acc max: 0.556  last: 0.551
+Trained in 359.804
+
+Params: (0.03, 64, 'GRU', True, 8, 16, 4, 64)
+acc     max: 0.510  last: 0.510
+val_acc max: 0.388  last: 0.324
+Trained in 373.521
+
+Params: (0.03, 64, 'GRU', True, 8, 16, 8, 32)
+acc     max: 0.475  last: 0.475
+val_acc max: 0.416  last: 0.416
+Trained in 374.666
+
+Params: (0.03, 64, 'GRU', True, 8, 16, 8, 64)
+acc     max: 0.454  last: 0.454
+val_acc max: 0.404  last: 0.385
+Trained in 371.780
+
+Params: (0.03, 64, 'GRU', True, 8, 32, 2, 32)
+acc     max: 0.635  last: 0.635
+val_acc max: 0.534  last: 0.534
+Trained in 394.424
+
+Params: (0.03, 64, 'GRU', True, 8, 32, 2, 64)
+acc     max: 0.575  last: 0.575
+val_acc max: 0.461  last: 0.461
+Trained in 406.943
+
+Params: (0.03, 64, 'GRU', True, 8, 32, 4, 32)
+acc     max: 0.629  last: 0.629
+val_acc max: 0.556  last: 0.520
+Trained in 286.022
+
+Params: (0.03, 64, 'GRU', True, 8, 32, 4, 64)
+acc     max: 0.482  last: 0.482
+val_acc max: 0.435  last: 0.314
+Trained in 285.052
+
+Params: (0.03, 64, 'GRU', True, 8, 32, 8, 32)
+acc     max: 0.536  last: 0.536
+val_acc max: 0.489  last: 0.461
+Trained in 382.687
+
+Params: (0.03, 64, 'GRU', True, 8, 32, 8, 64)
+acc     max: 0.624  last: 0.624
+val_acc max: 0.459  last: 0.459
+Trained in 388.855
