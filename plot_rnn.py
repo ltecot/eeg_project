@@ -458,7 +458,7 @@ def plot_best(plot_conv_output=False, plot_centroid=False):
         y_val_small = y_valid_original[rand_indexes]
     
     if plot_conv_output:
-        layer_name = None
+        layer_name = 'max_pooling1d_1'
         intermediate_layer_model = Model(inputs=plot_model.input,
                                         outputs=plot_model.get_layer(layer_name).output)
         y_valid_pred = intermediate_layer_model.predict(X_val_small)
@@ -472,6 +472,7 @@ def plot_best(plot_conv_output=False, plot_centroid=False):
         plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz.mp4', fps=2)
 
 if __name__ == '__main__':
+    np.random.seed(3)
     # plot_GRU1_128units_dropout_subsampling100_valacc38()
-    # plot_GRU_conv_65val(plot_conv_output=False, plot_centroid=True)
-    plot_best(plot_conv_output=False, plot_centroid=True)
+    plot_GRU_conv_65val(plot_conv_output=False, plot_centroid=False)
+    # plot_best(plot_conv_output=True, plot_centroid=False)
