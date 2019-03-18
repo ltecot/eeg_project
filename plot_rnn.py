@@ -196,7 +196,7 @@ def plot_GRU1_128units_dropout_subsampling100_valacc38():
     plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
 
 # Trained on person 0
-def plot_GRU_conv_65val(plot_conv_output=False):
+def plot_GRU_conv_65val(plot_conv_output=False, plot_centroid=False):
     X_test = np.load("X_test.npy")
     y_test = np.load("y_test.npy")
     person_train_valid = np.load("person_train_valid.npy")
@@ -300,17 +300,29 @@ def plot_GRU_conv_65val(plot_conv_output=False):
 
     # Plot test data
     # rand_indexes = np.random.choice(k_X_val.shape[0], 8, replace=False)
-    inds_0 = np.where(k_y_val==0)
-    inds_1 = np.where(k_y_val==1)
-    inds_2 = np.where(k_y_val==2)
-    inds_3 = np.where(k_y_val==3)
-    # rand_indexes = np.concatenate((inds_0[0][:2], inds_1[0][:2], inds_2[0][:2], inds_3[0][:2]))
-    rand_indexes = np.concatenate((np.random.choice(inds_0[0], 2, replace=False),
-                                np.random.choice(inds_1[0], 2, replace=False),
-                                np.random.choice(inds_2[0], 2, replace=False),
-                                np.random.choice(inds_3[0], 2, replace=False)))
-    k_X_val_small = k_X_val[rand_indexes, :, :]
-    k_y_val_small = k_y_val[rand_indexes]
+    if plot_centroid:
+        inds_0 = np.where(k_y_val==0)
+        inds_1 = np.where(k_y_val==1)
+        inds_2 = np.where(k_y_val==2)
+        inds_3 = np.where(k_y_val==3)
+        k_X_val_small = np.concatenate((np.mean(k_X_val[inds_0[0], :, :], axis=0, keepdims=True),
+                                        np.mean(k_X_val[inds_1[0], :, :], axis=0, keepdims=True),
+                                        np.mean(k_X_val[inds_2[0], :, :], axis=0, keepdims=True),
+                                        np.mean(k_X_val[inds_3[0], :, :], axis=0, keepdims=True)))
+        k_y_val_small = np.array([0, 1, 2, 3])
+        print(k_X_val_small.shape)
+    else:
+        inds_0 = np.where(k_y_val==0)
+        inds_1 = np.where(k_y_val==1)
+        inds_2 = np.where(k_y_val==2)
+        inds_3 = np.where(k_y_val==3)
+        # rand_indexes = np.concatenate((inds_0[0][:2], inds_1[0][:2], inds_2[0][:2], inds_3[0][:2]))
+        rand_indexes = np.concatenate((np.random.choice(inds_0[0], 2, replace=False),
+                                    np.random.choice(inds_1[0], 2, replace=False),
+                                    np.random.choice(inds_2[0], 2, replace=False),
+                                    np.random.choice(inds_3[0], 2, replace=False)))
+        k_X_val_small = k_X_val[rand_indexes, :, :]
+        k_y_val_small = k_y_val[rand_indexes]
 
     input_dim = k_X_train.shape[1:]
     gru_units_sub = 128
@@ -346,19 +358,19 @@ def plot_GRU_conv_65val(plot_conv_output=False):
     # plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
 
     if plot_conv_output:
-        layer_name = None
+        layer_name = 'conv1d_2'
         intermediate_layer_model = Model(inputs=model.input,
                                         outputs=model.get_layer(layer_name).output)
         k_y_val_small_predict = intermediate_layer_model.predict(k_X_val_small)
         k_y_val_small_predict_embedded = transform_data_with_TSNE(3, k_y_val_small_predict)
-        plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
+        plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval65_viz_conv.mp4')
     else:  # Plot reccurent output
         k_y_val_small_predict = model.predict(k_X_val_small)
         k_y_val_small_predict_embedded = transform_data_with_TSNE(3, k_y_val_small_predict)
-        plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
+        plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval65_viz.mp4')
     
 
-def plot_best(plot_conv_output=False):
+def plot_best(plot_conv_output=False, plot_centroid=False):
     X_test = np.load("X_test.npy")
     y_test = np.load("y_test.npy")
     person_train_valid = np.load("person_train_valid.npy")
@@ -421,33 +433,46 @@ def plot_best(plot_conv_output=False):
     # plot_model.load_weights(new_weights)
 
     y_valid_original = np.argmax(y_valid, axis=1)
-    inds_0 = np.where(y_valid_original==0)
-    inds_1 = np.where(y_valid_original==1)
-    inds_2 = np.where(y_valid_original==2)
-    inds_3 = np.where(y_valid_original==3)
-    # rand_indexes = np.concatenate((inds_0[0][:2], inds_1[0][:2], inds_2[0][:2], inds_3[0][:2]))
-    rand_indexes = np.concatenate((np.random.choice(inds_0[0], 2, replace=False),
-                                np.random.choice(inds_1[0], 2, replace=False),
-                                np.random.choice(inds_2[0], 2, replace=False),
-                                np.random.choice(inds_3[0], 2, replace=False)))
-    X_val_small = X_valid[rand_indexes, :, :]
-    y_val_small = y_valid_original[rand_indexes]
+    if plot_centroid:
+        inds_0 = np.where(y_valid_original==0)
+        inds_1 = np.where(y_valid_original==1)
+        inds_2 = np.where(y_valid_original==2)
+        inds_3 = np.where(y_valid_original==3)
+        X_val_small = np.concatenate((np.mean(X_valid[inds_0[0], :, :], axis=0, keepdims=True),
+                                        np.mean(X_valid[inds_1[0], :, :], axis=0, keepdims=True),
+                                        np.mean(X_valid[inds_2[0], :, :], axis=0, keepdims=True),
+                                        np.mean(X_valid[inds_3[0], :, :], axis=0, keepdims=True)))
+        y_val_small = np.array([0, 1, 2, 3])
+        print(y_val_small.shape)
+    else:
+        inds_0 = np.where(y_valid_original==0)
+        inds_1 = np.where(y_valid_original==1)
+        inds_2 = np.where(y_valid_original==2)
+        inds_3 = np.where(y_valid_original==3)
+        # rand_indexes = np.concatenate((inds_0[0][:2], inds_1[0][:2], inds_2[0][:2], inds_3[0][:2]))
+        rand_indexes = np.concatenate((np.random.choice(inds_0[0], 2, replace=False),
+                                    np.random.choice(inds_1[0], 2, replace=False),
+                                    np.random.choice(inds_2[0], 2, replace=False),
+                                    np.random.choice(inds_3[0], 2, replace=False)))
+        X_val_small = X_valid[rand_indexes, :, :]
+        y_val_small = y_valid_original[rand_indexes]
     
     if plot_conv_output:
-        layer_name = None
+        layer_name = 'max_pooling1d_1'
         intermediate_layer_model = Model(inputs=plot_model.input,
                                         outputs=plot_model.get_layer(layer_name).output)
         y_valid_pred = intermediate_layer_model.predict(X_val_small)
         y_valid_pred_embedded = transform_data_with_TSNE(3, y_valid_pred)
         print(y_valid_pred_embedded.shape)
-        plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz_conv.mp4')
+        plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz_conv.mp4', fps=2)
     else:  # Plot reccurent output
         y_valid_pred = plot_model.predict(X_val_small)
         y_valid_pred_embedded = transform_data_with_TSNE(3, y_valid_pred)
         print(y_valid_pred_embedded.shape)
-        plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz.mp4')
+        plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz.mp4', fps=2)
 
 if __name__ == '__main__':
+    np.random.seed(3)
     # plot_GRU1_128units_dropout_subsampling100_valacc38()
-    plot_GRU_conv_53val()
-    # plot_best()
+    plot_GRU_conv_65val(plot_conv_output=False, plot_centroid=False)
+    # plot_best(plot_conv_output=True, plot_centroid=False)
