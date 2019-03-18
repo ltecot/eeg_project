@@ -6,8 +6,6 @@
 # "Auto-Encoding Variational Bayes."
 # https://arxiv.org/abs/1312.6114
 
-# Dev note: Tried a variety of layer sizes and depths but always seemed to get ~2400 train and valid.
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -19,7 +17,7 @@ if sys_pf == 'darwin':
     matplotlib.use("TkAgg")
 
 from keras.layers import Lambda, Input, Dense
-from keras.models import Model
+from keras.models import Model, load_model
 from keras.datasets import mnist
 from keras.losses import mse, binary_crossentropy
 from keras.utils import plot_model
@@ -115,7 +113,7 @@ class VAE(object):
         x = Dense(intermediate_dim, activation='relu')(latent_inputs)
         h2 = Dense(intermediate_dim, activation='relu')(x)
         h1 = Dense(intermediate_dim, activation='relu')(h2)
-        outputs = Dense(original_dim, activation='sigmoid')(h1)
+        outputs = Dense(original_dim, activation='linear')(h1)
 
         # instantiate decoder model
         decoder = Model(latent_inputs, outputs, name='decoder')
@@ -137,7 +135,7 @@ class VAE(object):
         self.intermediate_dim = intermediate_dim
         self.latent_dim = latent_dim
 
-    def train(self, x_train, x_valid, batch_size=128, epochs=1, use_mse=True):
+    def train(self, x_train, x_valid, batch_size=128, epochs=1, use_mse=True, save_name="vae_mlp_eeg"):
         """ Trains the VAE
         Args:
             x_train: Data to use for training. Must be 2D, and last dim must match original_dim.
@@ -181,7 +179,8 @@ class VAE(object):
                 epochs=epochs,
                 batch_size=batch_size,
                 validation_data=(x_valid, None))
-        vae.save_weights('vae_mlp_eeg.h5')
+        vae.save(save_name + '.h5')
+        vae.save_weights(save_name + '_weights.h5')
 
     def load_weights(self, weights):
         """ Load Weights. Intended to be used if you don't want to train again.
@@ -209,11 +208,10 @@ class VAE(object):
         xp = self.decoder.predict(z_mean, batch_size=batch_size)
         return xp
 
-
 if __name__ == '__main__':
 
-    # weights = None
-    weights = "vae_mlp_eeg.h5"
+    model_name = "vae_mlp_eeg"
+    train_model = True
 
     def format_data(x, y):
         x = np.swapaxes(x, 1, 2)
@@ -231,6 +229,17 @@ if __name__ == '__main__':
     y_train_valid = np.load("y_train_valid.npy")
     person_test = np.load("person_test.npy")
 
+    # Grab one person
+    # idx_p0_train = np.where(person_train_valid == 0)[0]
+    # idx_p0_test = np.where(person_test == 0)[0]
+
+    # X_train_valid = X_train_valid[idx_p0_train] 
+    # y_train_valid = y_train_valid[idx_p0_train]
+
+    # X_test = X_test[idx_p0_test]
+    # y_test = y_test[idx_p0_test]
+    # original_y_test = y_test-769
+
     # Split train and valid. 90-10 split
     X_train_valid_permute = np.random.permutation(X_train_valid)
     split_ind = int(9 * X_train_valid.shape[0] / 10)
@@ -243,10 +252,11 @@ if __name__ == '__main__':
     X_valid, y_valid = format_data(X_valid, y_valid)
 
     vae = VAE(X_train.shape[1], 64, 3)
-    if weights:
-        vae.load_weights(weights)
+    if not train_model:
+        # vae = load_model(model_name + '.h5')
+        vae.load_weights(model_name + '_weights.h5')
     else:
-        vae.train(X_train, X_valid, batch_size=128, epochs=3, use_mse=True)
+        vae.train(X_train, X_valid, batch_size=128, epochs=5, use_mse=True, save_name=model_name)
 
     inds_0 = np.where(original_y_test==0)
     inds_1 = np.where(original_y_test==1)
@@ -261,14 +271,14 @@ if __name__ == '__main__':
 
     # Plot test data, VAE
     X_test_small = np.reshape(X_test, (-1, 1000, 22))
-    X_test_small = X_test_small[rand_indexes]
+    X_test_small = X_test_small[rand_indexes, :, :]
     X_test_latent_vae = transform_data_with_VAE(vae, X_test_small)
-    plot_3D(X_test_latent_vae, plot_y_test, plot=True, file_name='vae_viz3.mp4')
+    plot_3D(X_test_latent_vae, plot_y_test, plot=True, file_name='vae_viz.mp4')
 
     # Plot test TSNE
     # X_test_latent_tsne = transform_data_with_TSNE(3, X_test_small)
     # plot_3D(X_test_latent_tsne, plot_y_test, plot=True, file_name='tsne_viz2.mp4')
 
-    # print("average difference", np.average(np.abs(X_valid - vae.reconstruct(X_valid))))
-    # print("average value", np.average(np.abs(X_valid)))
+    print("average difference", np.average(np.abs(X_valid - vae.reconstruct(X_valid))))
+    print("average value", np.average(np.abs(X_valid)))
 
