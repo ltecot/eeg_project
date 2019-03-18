@@ -33,7 +33,6 @@ from plotting_utils import plot_3D
 from sklearn.manifold import TSNE
 
 # Utils for translating data 
-
 def transform_data_with_VAE(vae_model, data):
     """ Transform data with VAE. Input the VAE model
         and the data. Can be any dimension as long as 
@@ -211,7 +210,7 @@ class VAE(object):
 if __name__ == '__main__':
 
     model_name = "vae_mlp_eeg"
-    train_model = True
+    train_model = False
 
     def format_data(x, y):
         x = np.swapaxes(x, 1, 2)
@@ -273,12 +272,23 @@ if __name__ == '__main__':
     X_test_small = np.reshape(X_test, (-1, 1000, 22))
     X_test_small = X_test_small[rand_indexes, :, :]
     X_test_latent_vae = transform_data_with_VAE(vae, X_test_small)
-    plot_3D(X_test_latent_vae, plot_y_test, plot=True, file_name='vae_viz.mp4')
+    plot_3D(X_test_latent_vae, plot_y_test, plot=True, file_name='vae_viz2.mp4')
 
     # Plot test TSNE
     # X_test_latent_tsne = transform_data_with_TSNE(3, X_test_small)
     # plot_3D(X_test_latent_tsne, plot_y_test, plot=True, file_name='tsne_viz2.mp4')
 
-    print("average difference", np.average(np.abs(X_valid - vae.reconstruct(X_valid))))
-    print("average value", np.average(np.abs(X_valid)))
+    # 1903000/1903000 [==============================] - 323s 170us/step - loss: 145.9841 - val_loss: 152.7765
+    # Epoch 2/5
+    # 1903000/1903000 [==============================] - 371s 195us/step - loss: 136.1010 - val_loss: 151.9541
+    # Epoch 3/5
+    # 1903000/1903000 [==============================] - 382s 201us/step - loss: 131.5169 - val_loss: 144.1513
+    # Epoch 4/5
+    # 1903000/1903000 [==============================] - 359s 189us/step - loss: 131.0245 - val_loss: 149.1800
+    # Epoch 5/5
+    # 1903000/1903000 [==============================] - 348s 183us/step - loss: 131.2396 - val_loss: 150.1427
+    print("valid average difference", np.average(np.abs(X_valid - vae.reconstruct(X_valid))))
+    print("valid average value", np.average(np.abs(X_valid)))
+    print("test average difference", np.average(np.abs(X_test - vae.reconstruct(X_test))))
+    print("test average value", np.average(np.abs(X_test)))
 

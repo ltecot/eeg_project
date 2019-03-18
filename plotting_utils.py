@@ -27,7 +27,7 @@ from matplotlib import animation
 
 # Based off code from following link
 # https://jakevdp.github.io/blog/2013/02/16/animating-the-lorentz-system-in-3d/
-def plot_3D(x_t, y_t, num_show=None, plot=False, file_name=None):
+def plot_3D(x_t, y_t, num_show=None, plot=False, file_name=None, fps=15):
     """ Plots data in 3D over time.
         Note that this generally doesn't work in juypter notebooks.
     Args:
@@ -102,7 +102,7 @@ def plot_3D(x_t, y_t, num_show=None, plot=False, file_name=None):
 
     # Save as mp4. This requires mplayer or ffmpeg to be installed
     if file_name:
-        anim.save(file_name, fps=15, extra_args=['-vcodec', 'libx264'])
+        anim.save(file_name, fps=fps, extra_args=['-vcodec', 'libx264'])
 
     if plot:
         plt.show()
