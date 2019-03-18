@@ -195,7 +195,8 @@ def plot_GRU1_128units_dropout_subsampling100_valacc38():
 
     plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
 
-def plot_GRU_conv_53val():
+# Trained on person 0
+def plot_GRU_conv_65val(plot_conv_output=False):
     X_test = np.load("X_test.npy")
     y_test = np.load("y_test.npy")
     person_train_valid = np.load("person_train_valid.npy")
@@ -294,8 +295,8 @@ def plot_GRU_conv_53val():
     print("Categorical one-hot encoding:\n",k_y_train_categ[0:3])
 
     #################### RNN training
-    input_dim = k_X_train.shape[1:]
-    gru_units_sub = 128
+    # input_dim = k_X_train.shape[1:]
+    # gru_units_sub = 128
 
     # Plot test data
     # rand_indexes = np.random.choice(k_X_val.shape[0], 8, replace=False)
@@ -315,20 +316,18 @@ def plot_GRU_conv_53val():
     gru_units_sub = 128
 
     model = Sequential()
-    model.add(keras.layers.Conv1D(20, 10, input_shape=input_dim, 
-                                kernel_regularizer=keras.regularizers.l2(0.05)))
+    model.add(keras.layers.Conv1D(22, 10, input_shape=input_dim))
     model.add(keras.layers.BatchNormalization())
-    model.add(keras.layers.Conv1D(20, 10, kernel_regularizer=keras.regularizers.l2(0.05)))
+    model.add(keras.layers.Conv1D(22, 10))
     model.add(keras.layers.BatchNormalization())
+    # model.add(keras.layers.CuDNNGRU(gru_units_sub, input_shape=input_dim))
     model.add(keras.layers.GRU(gru_units_sub, input_shape=input_dim,
-                    recurrent_regularizer=keras.regularizers.l2(0.01), 
-                    kernel_regularizer=keras.regularizers.l2(0.01),
                     return_sequences=True,
                     reset_after=True,
                     name='cu_dnngru_1'))
-    f = h5py.File('GRU1-128units-dropout-subsampling100-valacc38_weights.h5', 'r')
+    f = h5py.File('Conv-BN-Conv-BN-GRU1-128units-BN-subsampling300-valacc65-weights.h5', 'r')
     print(list(f.keys()))
-    model.load_weights('GRU1-128units-dropout-subsampling100-valacc38_weights.h5', by_name=True)
+    model.load_weights('Conv-BN-Conv-BN-GRU1-128units-BN-subsampling300-valacc65-weights.h5', by_name=True)
     model.summary()
     # model.layers.pop()
     # gru_weights = model.layers[-1].get_weights()
@@ -338,17 +337,28 @@ def plot_GRU_conv_53val():
     # model.layers[-1].set_weights(gru_weights)
     # model.summary()
 
-    print(k_X_val_small.shape)
-    k_y_val_small_predict = model.predict(k_X_val_small)
-    print(k_y_val_small_predict.shape)
-    k_y_val_small_predict_embedded = TSNE(n_components=3, verbose=1).fit_transform(k_y_val_small_predict.reshape((-1, gru_units_sub))).reshape((8, 100, 3))
-    print(k_y_val_small_predict_embedded.shape)
+    # print(k_X_val_small.shape)
+    # k_y_val_small_predict = model.predict(k_X_val_small)
+    # print(k_y_val_small_predict.shape)
+    # k_y_val_small_predict_embedded = TSNE(n_components=3, verbose=1).fit_transform(k_y_val_small_predict.reshape((-1, gru_units_sub))).reshape((8, 100, 3))
+    # print(k_y_val_small_predict_embedded.shape)
 
-    plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
+    # plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
 
+    if plot_conv_output:
+        layer_name = None
+        intermediate_layer_model = Model(inputs=model.input,
+                                        outputs=model.get_layer(layer_name).output)
+        k_y_val_small_predict = intermediate_layer_model.predict(k_X_val_small)
+        k_y_val_small_predict_embedded = transform_data_with_TSNE(3, k_y_val_small_predict)
+        plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
+    else:  # Plot reccurent output
+        k_y_val_small_predict = model.predict(k_X_val_small)
+        k_y_val_small_predict_embedded = transform_data_with_TSNE(3, k_y_val_small_predict)
+        plot_3D(k_y_val_small_predict_embedded, k_y_val_small, plot=True, file_name='gruval38_viz3.mp4')
     
 
-def plot_best():
+def plot_best(plot_conv_output=False):
     X_test = np.load("X_test.npy")
     y_test = np.load("y_test.npy")
     person_train_valid = np.load("person_train_valid.npy")
@@ -396,7 +406,7 @@ def plot_best():
     # weights = weights[:-2]  # Get rid of last dense and batchnorm
     # plot_model.load_weights(weights)
     plot_model.load_weights('best_weights.h5', by_name=True)
-    # plot_model.summary()
+    plot_model.summary()
     # f = h5py.File('best_weights.h5', 'r')
     # print(list(f.keys()))
     # new_weights = f['conv1d_1']['dropout_1']['batch_normalization_1']['conv1d_2']['dropout_2']['batch_normalization_2']['max_pooling1d_1']['cu_dnngru_1']
@@ -423,10 +433,19 @@ def plot_best():
     X_val_small = X_valid[rand_indexes, :, :]
     y_val_small = y_valid_original[rand_indexes]
     
-    y_valid_pred = plot_model.predict(X_val_small)
-    y_valid_pred_embedded = transform_data_with_TSNE(3, y_valid_pred)
-    print(y_valid_pred_embedded.shape)
-    plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz2.mp4')
+    if plot_conv_output:
+        layer_name = None
+        intermediate_layer_model = Model(inputs=plot_model.input,
+                                        outputs=plot_model.get_layer(layer_name).output)
+        y_valid_pred = intermediate_layer_model.predict(X_val_small)
+        y_valid_pred_embedded = transform_data_with_TSNE(3, y_valid_pred)
+        print(y_valid_pred_embedded.shape)
+        plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz_conv.mp4')
+    else:  # Plot reccurent output
+        y_valid_pred = plot_model.predict(X_val_small)
+        y_valid_pred_embedded = transform_data_with_TSNE(3, y_valid_pred)
+        print(y_valid_pred_embedded.shape)
+        plot_3D(y_valid_pred_embedded, y_val_small, plot=True, file_name='best_viz.mp4')
 
 if __name__ == '__main__':
     # plot_GRU1_128units_dropout_subsampling100_valacc38()
