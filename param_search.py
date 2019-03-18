@@ -35,14 +35,15 @@ def create_model(learn_rate=0.001, clip_value=1, cell_type='LSTM', num_units=100
             model.add(Dropout(0.5))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.MaxPool1D(pool_size=pool_size))
-    if cell_type == 'LSTM':
-        model.add(keras.layers.CuDNNLSTM(num_units, input_shape=input_dim))
-    elif cell_type == 'GRU':
-        model.add(keras.layers.CuDNNGRU(num_units, input_shape=input_dim))
+    # if cell_type == 'LSTM':
+        # model.add(keras.layers.CuDNNLSTM(num_units, input_shape=input_dim))
+    # elif cell_type == 'GRU':
+        # model.add(keras.layers.CuDNNGRU(num_units, input_shape=input_dim))
 
-    if dropout:
-        model.add(Dropout(0.5))
-    model.add(keras.layers.BatchNormalization())
+    # if dropout:
+        # model.add(Dropout(0.5))
+    # model.add(keras.layers.BatchNormalization())
+    model.add(keras.layers.Flatten())
     model.add(Dense(4, activation="softmax"))
 
 
@@ -116,7 +117,7 @@ if __name__ == '__main__':
     X_valid, y_valid = transform_data(X_valid, y_valid)
     X_test, y_test= transform_data(X_test, y_test)
 
-    use_vae=False
+    use_vae=True
     if use_vae:
         print("Tranforming data using VAE")
         vae = VAE(X_train.shape[2], 64, 3)
@@ -130,48 +131,50 @@ if __name__ == '__main__':
 
     input_dim = X_train.shape[1:]
 
-    lr_scheduler = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=0)
+    lr_scheduler = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1)
     early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=20, verbose=1)
     csv_logger = CSVLogger(logfile)
 
 
     print("DATA READY FOR TRAINING!!!!")
-    # model = create_model(learn_rate=0.001, cell_type='GRU', num_units=64, dropout=True, add_conv=True, input_dim=input_dim, num_filters=64, pool_size=8, kernel_size=32, stride_size=4)
-    # history = model.fit(X_train, y_train, epochs=250, batch_size=64, validation_data=(X_valid, y_valid), verbose=1, callbacks=[lr_scheduler, csv_logger, early_stopping])
-    # print("Trained in {}".format(time.time()-start))
-    # print("val_acc max: {:.3f}  mean: {:.3f}".format(max(history.history['val_acc']), sum(history.history['val_acc']) / len(history.history['val_acc'])))
-    # print("\nTEST SET accuracy:")
-    # print(model.evaluate(X_test, y_test))
-    # model.save_weights("best_weights_vae.h5")
+    start = time.time()
+    model = create_model(learn_rate=0.01, cell_type='LSTM', num_units=64, dropout=True, add_conv=True, input_dim=input_dim, num_filters=32, pool_size=4, kernel_size=16, stride_size=4)
+    history = model.fit(X_train, y_train, epochs=250, batch_size=128, validation_data=(X_valid, y_valid), verbose=1, callbacks=[lr_scheduler, csv_logger, early_stopping])
+    print("Trained in {}".format(time.time()-start))
+    print("acc     max: {:.3f}  last: {:.3f}".format(max(history.history['acc']), history.history['acc'][-1]))
+    print("val_acc max: {:.3f}  last: {:.3f}".format(max(history.history['val_acc']), history.history['val_acc'][-1]))
+    print("\nTEST SET accuracy:")
+    print(model.evaluate(X_test, y_test))
+    model.save_weights("best_weights_vae.h5")
 
     # lrs = [0.01, 0.03, 0.001, 0.003, 0.001]#, 0.0003, 0.0001]
-    lrs = [0.01, 0.03, 0.001, 0.003]
-    num_hidden_dim = [64]
-    cell_types = ['LSTM', 'GRU']
-    use_dropout = [True]
-    pool_sizes = [2, 4,8,]
-    kernel_sizes =[4, 8, 16, 32]
-    stride_sizes = [2, 4, 8]
-    filter_sizes = [32, 64]
-    results = dict()
-    for key in itertools.product(lrs, num_hidden_dim, cell_types, use_dropout, pool_sizes, kernel_sizes, stride_sizes, filter_sizes):
-        start = time.time()
-        lr, h_dim, c_t, d, pool_size, kernel_size, ss, num_filters = key
-        start = time.time()
-        model = create_model(learn_rate=lr, cell_type=c_t, num_units = h_dim, dropout=d, add_conv = True, input_dim=input_dim, num_filters=num_filters, pool_size=pool_size, kernel_size=kernel_size, stride_size=ss)
-        print("Params: {} ".format(key))
-        try:
-            history = model.fit(X_train, y_train, epochs=15, batch_size=128, validation_data=(X_valid, y_valid), verbose=0, callbacks=[lr_scheduler])
-            print("acc     max: {:.3f}  last: {:.3f}".format(max(history.history['acc']), history.history['acc'][-1]))
-            print("val_acc max: {:.3f}  last: {:.3f}".format(max(history.history['val_acc']), history.history['val_acc'][-1]))
-            results[key] = history.history
+    # lrs = [0.01, 0.03, 0.001, 0.003]
+    # num_hidden_dim = [64]
+    # cell_types = ['LSTM', 'GRU']
+    # use_dropout = [True]
+    # pool_sizes = [2, 4,8,]
+    # kernel_sizes =[4, 8, 16, 32]
+    # stride_sizes = [2, 4, 8]
+    # filter_sizes = [32, 64]
+    # results = dict()
+    # for key in itertools.product(lrs, num_hidden_dim, cell_types, use_dropout, pool_sizes, kernel_sizes, stride_sizes, filter_sizes):
+        # start = time.time()
+        # lr, h_dim, c_t, d, pool_size, kernel_size, ss, num_filters = key
+        # start = time.time()
+        # model = create_model(learn_rate=lr, cell_type=c_t, num_units = h_dim, dropout=d, add_conv = True, input_dim=input_dim, num_filters=num_filters, pool_size=pool_size, kernel_size=kernel_size, stride_size=ss)
+        # print("Params: {} ".format(key))
+        # try:
+            # history = model.fit(X_train, y_train, epochs=15, batch_size=128, validation_data=(X_valid, y_valid), verbose=0, callbacks=[lr_scheduler])
+            # print("acc     max: {:.3f}  last: {:.3f}".format(max(history.history['acc']), history.history['acc'][-1]))
+            # print("val_acc max: {:.3f}  last: {:.3f}".format(max(history.history['val_acc']), history.history['val_acc'][-1]))
+            # results[key] = history.history
 
-        except:
-            results[key] = "EXCEPTION"
-            print("Failed")
-        print("Trained in {0:.3f}\n".format(time.time()-start))
+        # except:
+            # results[key] = "EXCEPTION"
+            # print("Failed")
+        # print("Trained in {0:.3f}\n".format(time.time()-start))
 
-    import pickle
-    f = open("dict.pkl", "wb+")
-    pickle.dump(results, f)
-    f.close()
+    # import pickle
+    # f = open("dict.pkl", "wb+")
+    # pickle.dump(results, f)
+    # f.close()
